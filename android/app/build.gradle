@@ -77,7 +77,6 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
-
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -137,8 +136,61 @@ android {
     }
 }
 
+preBuild.doLast {
+    ant.replaceregexp(match:'import android.support.annotation.', replace:'import androidx.annotation.', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+    ant.replaceregexp(match:'@android.support.annotation.', replace:'@androidx.annotation.', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+    ant.replaceregexp(match:'import android.support.v4.content.', replace:'import androidx.core.content.', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+    ant.replaceregexp(match:'import android.support.media.', replace:'import androidx.exifinterface.media.', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+    ant.replaceregexp(match:'import android.support.v8.renderscript.', replace:'import androidx.renderscript.', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+    ant.replaceregexp(match:'import android.support.v4.os.', replace:'import androidx.core.os.', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+    ant.replaceregexp(match:'import android.support.v4.view.', replace:'import androidx.core.view.', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+    ant.replaceregexp(match:'import android.support.v4.util.Pools', replace:'import androidx.core.util.Pools', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+    ant.replaceregexp(match:'import android.support.v4.util.', replace:'import androidx.collection.', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+    ant.replaceregexp(match:'import android.support.multidex.', replace:'import androidx.multidex.', flags:'g', byline:true) {
+        fileset(dir: './src/main/', includes: '**/*.java')
+    }
+
+    ant.replaceregexp(match:'import androidx.core.content.LocalBroadcastManager', replace:'import androidx.localbroadcastmanager.content.LocalBroadcastManager', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+    ant.replaceregexp(match:'android.support.v4.content.FileProvider', replace:'androidx.core.content.FileProvider', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+    ant.replaceregexp(match:'import android.support.v7.app.AlertDialog', replace:'import androidx.appcompat.app.AlertDialog', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+
+    ant.replaceregexp(match:'import android.support.v4.app', replace:'import androidx.core.app', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/', includes: '**/*.java')
+    }
+}
+
+
 dependencies {
+    implementation project(':react-native-firebase')
+    // Firebase dependencies
+    implementation "com.google.android.gms:play-services-base:16.1.0"
+    implementation "com.google.firebase:firebase-core:16.0.9"
     implementation project(':react-native-gesture-handler')
+    implementation 'com.google.firebase:firebase-auth:18.0.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
@@ -150,3 +202,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+apply plugin: 'com.google.gms.google-services'
+

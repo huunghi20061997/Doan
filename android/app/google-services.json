@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "687735349163",
+    "firebase_url": "https://coffeemanagerapp.firebaseio.com",
+    "project_id": "coffeemanagerapp",
+    "storage_bucket": "coffeemanagerapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687735349163:android:4ba752d20d1032ff",
+        "android_client_info": {
+          "package_name": "com.coffeemanagerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687735349163-cu353hkksc7g30ugan9dmih908q29oce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPv2hROUqLZg-D-RgT8lTH0x4ebeaT4Qw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687735349163-cu353hkksc7g30ugan9dmih908q29oce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
