@@ -102,6 +102,7 @@ android {
 
     defaultConfig {
         applicationId "com.coffeemanagerapp"
+        missingDimensionStrategy 'react-native-camera', 'general'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -185,6 +186,9 @@ preBuild.doLast {
 
 
 dependencies {
+    implementation project(':react-native-vector-icons')
+    implementation project(':react-native-wifi')
+    implementation project(':react-native-camera')
     implementation project(':react-native-firebase')
     // Firebase dependencies
     implementation "com.google.android.gms:play-services-base:16.1.0"

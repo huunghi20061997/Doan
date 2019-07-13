@@ -9,6 +9,10 @@ import * as constants from '../../../configapp/constants';
 
 class Splash extends Component {
 
+    static navigationOptions = {
+        header: null
+      }
+
     componentDidMount(){
         this.props.actionAuthen.actionAuthen();
     }

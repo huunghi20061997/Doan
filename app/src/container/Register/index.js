@@ -10,6 +10,11 @@ import Text_Custom from '../../component/text_custom';
 import Text_Input from '../../component/text_input';
 
 class Register extends Component {
+
+    static navigationOptions = {
+                                header: null
+    }
+
   constructor(props) {
     super(props);
     this.state = {

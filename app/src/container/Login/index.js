@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import  {   Text, View,ImageBackground,
-            SafeAreaView,ScrollView
+            SafeAreaView,ScrollView,TouchableOpacity
         } from 'react-native'
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -11,11 +11,17 @@ import Text_Input from '../../component/text_input';
 import {showBlockUI,hideBlockUI} from '../../component/block-ui';
 
 class Login extends Component {
+
+  static navigationOptions = {
+    header: null
+  }
+
   constructor(props) {
     super(props);
 
     this.changeUserName = this.changeUserName.bind(this);
     this.changePassWord = this.changePassWord.bind(this);
+    this.checkLogin = this.checkLogin.bind(this);
 
     this.state = {
       userName : '',
@@ -24,7 +30,6 @@ class Login extends Component {
   }
 
   componentDidMount(){
-    showBlockUI();
   }
 
   changeUserName = (text) => {
@@ -37,6 +42,10 @@ class Login extends Component {
     this.setState({
       passWord : text
     })
+  }
+
+  checkLogin(){
+    this.props.actionAuthen.actionLoginUser(this.state.userName,this.state.passWord);
   }
 
   render() {
@@ -83,6 +92,7 @@ class Login extends Component {
                                     >
                                           <Text_Input textHolder = {'Nhập User, số điện thoại'}
                                                       onChangeText = {this.changeUserName}
+                                                      value = {this.state.userName}
                                           />
 
                                           <View style = {{
@@ -92,21 +102,23 @@ class Login extends Component {
                                               <Text_Input textHolder = {'Nhập Password'}
                                                           onChangeText = {this.changePassWord}
                                                           secure = {true}
+                                                          value = {this.state.passWord}
                                               />
                                           </View>
                                     </View>
 
                                     {/* Button Login & Register */}
-                                    <View style = {{
-                                                      marginTop : constants.MARGIN_DEFAULT_APP * 2,
-                                                      justifyContent : 'center',
-                                                      alignItems : 'center',
-                                                      height : constants.HEIGHT_DEFAULT_TEXT_INPUT,
-                                                      borderRadius : constants.BODERADIUS_CIRCLE_APP,
-                                                      width : '50%',
-                                                      alignSelf : 'center',
-                                                      backgroundColor : constants.BACKGROUND_TURQUOISE_OPACITY
-                                                  }}
+                                    <TouchableOpacity style = {{
+                                                                  marginTop : constants.MARGIN_DEFAULT_APP * 2,
+                                                                  justifyContent : 'center',
+                                                                  alignItems : 'center',
+                                                                  height : constants.HEIGHT_DEFAULT_TEXT_INPUT,
+                                                                  borderRadius : constants.BODERADIUS_CIRCLE_APP,
+                                                                  width : '50%',
+                                                                  alignSelf : 'center',
+                                                                  backgroundColor : constants.BACKGROUND_TURQUOISE_OPACITY
+                                                              }}
+                                                      onPress = {this.checkLogin}
                                     >
                                           <Text_Custom  content = {'Đăng nhập'}
                                                         style = {{
@@ -114,7 +126,7 @@ class Login extends Component {
                                                                     fontSize:  15,
                                                                 }}
                                           />
-                                    </View>
+                                    </TouchableOpacity>
 
                                     <View style = {{
                                                         marginTop : constants.MARGIN_DEFAULT_APP * 2

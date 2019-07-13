@@ -3,6 +3,9 @@ package com.coffeemanagerapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.reactlibrary.RNWifiPackage;
+import org.reactnative.camera.RNCameraPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage ;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -26,6 +29,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
+            new RNWifiPackage(),
+            new RNCameraPackage(),
             new RNFirebasePackage(),
             new RNGestureHandlerPackage(),
               new RNFirebaseAuthPackage()

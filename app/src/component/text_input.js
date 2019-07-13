@@ -23,6 +23,7 @@ export default class Text_Input extends Component {
                                 style = {{
                                             flex : 1
                                         }}
+                                value = {this.props.value}
                                 placeholder = {this.props.textHolder ? this.props.textHolder : ''}
                                 secureTextEntry = {this.props.secure ? this.props.secure : false}
                                 onChangeText = {this.props.onChangeText}

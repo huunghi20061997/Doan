@@ -11,13 +11,24 @@ export default class Text_Custom extends Component {
   }
 
   render() {
+    let styleView = this.props.styleView ? this.props.styleView  : {};
     return (
-      <View style = {{
+      <View style = {[{
                         flex : 1,
                         justifyContent : 'center',
                         alignItems : 'center',
-                    }}
+                        flexDirection : 'row'
+                      },styleView]}
       >
+            {
+              this.props.childrenComponent &&
+                <View style = {{
+                                  marginRight : 10,
+                              }}
+                >
+                  {this.props.children}
+                </View>
+            }
             <Text   style = {this.props.style ? [styleDefault.style_Text,this.props.style] : styleDefault.style_Text}
             >
                 {this.props.content}
