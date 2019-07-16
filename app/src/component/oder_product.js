@@ -6,16 +6,40 @@ import * as actionOder from '../container/menu/oder/action';
 import * as constants from '../../configapp/constants';
 import Text_Custom from '../component/text_custom';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import ListOderModal from '../../src/component/listOderModal';
 
 
 class OderProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      modalListOder : false, 
     };
+    this.showHideModalListOder = this.showHideModalListOder.bind(this);
+
+  }
+
+  getPrice(){
+    const listData = this.props.isReducerOder.isListOder ; 
+    if(listData.length > 0) {
+      let priceTotal = 0 ; 
+      listData.forEach(currentItem => {
+        priceTotal += (currentItem.price * currentItem.number) ;
+      })
+      return priceTotal + constants.STRING_PRICE ; 
+    }else {
+      return '0đ'
+    }
+  }
+
+  showHideModalListOder(){
+    this.setState({
+      modalListOder : !this.state.modalListOder, 
+    });
   }
 
   render() {
+    const price = this.getPrice();
     return (
       <View style = {{
                         flex : 1,
@@ -25,6 +49,12 @@ class OderProduct extends Component {
                         backgroundColor : constants.BACKGROUND_PRIMARY_APP
                     }}
       >
+
+        {/* Modal List Product Odered */}
+        <ListOderModal  visible = {this.state.modalListOder}
+                        onPressShowHideModal = {this.showHideModalListOder}
+        />
+
         <Text_Custom    content = {'Tổng tiền'}
                         style = {{
                                     color : constants.GRAY_COLOR,
@@ -55,7 +85,7 @@ class OderProduct extends Component {
                                             alignItems : 'flex-start',
                                         }}
                         >
-                                <Text_Custom    content = {'10.000đ'}
+                                <Text_Custom    content = {price}
                                                 style = {{
                                                             color : constants.GRAY_COLOR
                                                         }}
@@ -64,6 +94,7 @@ class OderProduct extends Component {
 
                         <Icon   name = {'clipboard-list'}
                                 size = {15}
+                                onPress = {this.showHideModalListOder}
                                 style = {{
                                             alignSelf : 'center'
                                         }}
@@ -99,7 +130,7 @@ class OderProduct extends Component {
 
 function mapStateToProps(state) {
     return {
-      isReducerGetList        :    state.isReducerGetList
+      isReducerOder        :    state.isReducerOder
     }
 }
 

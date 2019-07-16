@@ -46,11 +46,13 @@ export const BACKGROUND_ORANGE              =           'rgba(240, 147, 43,1.0)'
 export const BACKGROUND_ORANGE_OPACITY      =           'rgba(240, 147, 43,0.2)';
 export const BACKGROUND_BELOW_APP           =           'rgba(248, 248, 255, 1)';
 export const BACKGROUND_BACKGROUND_ITEM     =           'rgba(248, 248, 255, 0.2)';
+export const BACKGROUND_MODAL_APP           =           'rgba(0, 0, 0, 0.2)';
 
 
 
 
-
+export const STRING_PRICE           =           '.000đ';
+export const SIZE_TEXT_MEDIUM       =           15; 
 
 
 

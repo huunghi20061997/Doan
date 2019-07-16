@@ -17,7 +17,7 @@ export default class Text_Custom extends Component {
                         flex : 1,
                         justifyContent : 'center',
                         alignItems : 'center',
-                        flexDirection : 'row'
+                        flexDirection : 'row',
                       },styleView]}
       >
             {
@@ -44,6 +44,7 @@ const styleDefault = StyleSheet.create({
     style_Text : {
         fontSize: 12,
         color : 'black',
+        textAlign : 'center'
     }
 })
 

@@ -63,7 +63,7 @@ const isReducerOder = function (state = initStateOder, action){
         case constants.ADD_ODER_PRODUCT:
             return {
                 ...state,
-                isListOder: state.isListOder.push(action.data),
+                isListOder: action.data,
                 isOdering : false,
                 isOderSuccess : false,
                 isOderError : false,

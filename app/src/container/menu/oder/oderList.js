@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text,SafeAreaView,FlatList,ImageBackground } from 'react-native';
+import { View, Text,SafeAreaView,FlatList,ImageBackground,TouchableOpacity } from 'react-native';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -9,17 +9,19 @@ import Text_Custom from '../../../component/text_custom';
 import {showBlockUI,hideBlockUI} from '../../../component/block-ui';
 import OderProduct from '../../../component/oder_product';
 
-
 class OderList extends Component {
 
   
 
   constructor(props) {
     super(props);
-    this.renderItemProduct = this.renderItemProduct.bind(this);
     this.state = {
     };
+    this.renderItemProduct = this.renderItemProduct.bind(this);
   }
+
+  
+
 
   renderItemProduct = ({item}) => {
     return(
@@ -74,11 +76,14 @@ class OderList extends Component {
                                               }}
                     />
                     
-                    <View style = {{
-                                      width : '100%',
-                                      justifyContent : 'center',
-                                      alignItems : 'flex-end',
-                                  }}
+                    <TouchableOpacity style = {{
+                                                  width : '100%',
+                                                  justifyContent : 'center',
+                                                  alignItems : 'flex-end',
+                                              }}
+                                      onPress = {()=>{
+                                        this.props.actionOder.add_product_oder(item);
+                                      }}
                     >
                           <Text_Custom  content = {'Đặt ngay'}
                                         style = {{
@@ -96,9 +101,10 @@ class OderList extends Component {
                               <Icon name = {'plus-circle'}
                                     size = {10}
                                     color = {constants.BACKGROUND_GREEN}
+                                    solid = {true}
                               />
                           </Text_Custom>
-                    </View>
+                    </TouchableOpacity>
               </View>
       </View>
     )
@@ -154,7 +160,8 @@ class OderList extends Component {
                                                 flex : 0.3,
                                           }}
                             >
-                                  <OderProduct/>
+                                  <OderProduct
+                                  />
                             </View>
                         </View>
                     }
