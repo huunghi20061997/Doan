@@ -43,7 +43,8 @@ class OderQRCode extends Component {
                                   flex : 0.3,
                               }}
                 >
-                    <OderProduct/>
+                    <OderProduct  OderQR = {true}
+                    />
                 </View>
       </SafeAreaView>
     );

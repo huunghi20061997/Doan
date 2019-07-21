@@ -6,6 +6,8 @@ import {
     UIActivityIndicator
 } from 'react-native-indicators';
 import * as constants from '../../configapp/constants';
+import Text_Custom from '../component/text_custom';
+
 
 
 export class BlockUI extends Component {
@@ -14,20 +16,43 @@ export class BlockUI extends Component {
     this._showBlockUI = this._showBlockUI.bind(this);
     this._hideBlockUI = this._hideBlockUI.bind(this);
     this.state = {
-        isWaitingForSomething: false,
+        isLoading : false,
+        isSuccess : false,
+        isError : false, 
+        description : ''
     };
   }
 
   _showBlockUI() {
     this.setState({
-        isWaitingForSomething: true
+        isLoading: true,
+        isSuccess : false,
+        isError : false, 
+        description : ''
     });
 }
 
-_hideBlockUI(){
-    this.setState({
-        isWaitingForSomething: false
-    });
+_hideBlockUI(result,description){
+    
+    let Result = false ; 
+    if(result == constants.RESULT_BLOCK_SUCCESS){
+        this.setState({
+            isSuccess : true,
+            isError : false, 
+            description : ''
+        });
+    }else{
+        this.setState({
+            isSuccess : false,
+            isError : true, 
+            description : description, 
+        });
+    }
+    setTimeout(()=>{
+        this.setState({
+            isLoading: false,
+        })
+    },2000);
 }
 
 componentDidMount() {
@@ -51,7 +76,7 @@ componentWillUnmount() {
                         }
                     }
                     transparent={ true }
-                    visible={ this.state.isWaitingForSomething }
+                    visible={ this.state.isLoading }
                     animationType="none"
         >
                 <View   style = {{
@@ -61,10 +86,39 @@ componentWillUnmount() {
                                         backgroundColor: constants.BLACK_COLOR_OPACITY_70
                                 }}
                 >
-                        <UIActivityIndicator 
+                        {/* <UIActivityIndicator 
                                     size={ 30 }
                                     color= { constants.GRAY_COLOR }
-                        />
+                        /> */}
+                        <View   style = {{
+                                            position : 'absolute',
+                                            bottom : 50,
+                                            padding : 30,
+                                            borderRadius : 6,
+                                            width : '90%',
+                                            backgroundColor : 'white',
+                                            flexDirection : 'row',
+
+                                        }}
+                        >
+                                <View   style = {{
+                                                    flex : 1,
+                                                    alignItems : 'center',
+                                                    justifyContent :'center'
+                                                }}
+                                >
+                                        <Text_Custom    content =   {
+                                                                        this.state.isLoading && (this.state.isSuccess == this.state.isError) ? 
+                                                                            'Đang xử lí'
+                                                                        :
+                                                                            this.state.isSuccess ?
+                                                                                'Thành công'
+                                                                            :
+                                                                                this.state.description
+                                                                    }
+                                        />
+                                </View>
+                        </View>
                 </View>
         </Modal>
     );
@@ -77,6 +131,7 @@ export function showBlockUI() {
     ref._showBlockUI();
 }
 
-export function hideBlockUI() {
-    ref._hideBlockUI();
+export function hideBlockUI(result,description = '') {
+    const ref = BlockUIManager.getDefault();
+    ref._hideBlockUI(result,description);
 }

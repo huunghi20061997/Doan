@@ -29,6 +29,7 @@ const TabTopOderApp = createMaterialTopTabNavigator({
     }
 },{
     initialRouteName : 'OderList',
+    lazy : true,
     tabBarComponent : (props) => <TabTopOrder {...props}/>,
     tabBarOptions: {
         activeTintColor: "#4F4F4F",

@@ -11,8 +11,6 @@ import OderProduct from '../../../component/oder_product';
 
 class OderList extends Component {
 
-  
-
   constructor(props) {
     super(props);
     this.state = {
@@ -111,34 +109,20 @@ class OderList extends Component {
   }
 
   componentDidMount(){
-    this.props.actionOder.getListProduct();
+    
   }
 
+
   render() {
-    let props = this.props ; 
+    const props = this.props ;
+    const isReducerGetList = props.isReducerGetList; 
     return (
       <SafeAreaView style = {{
                                 flex : 1,
                                 backgroundColor : constants.BACKGROUND_BELOW_APP
                             }}
       >
-                    {/* Loading Data */}
-                    {
-                    props.isReducerGetList.isGetingList &&
-                        <View style = {{
-                                          flex : 1,
-                                          justifyContent : 'center',
-                                          alignItems : 'center'
-                                      }}
-                        >
-                              <Text_Custom  content = {'Đang tải danh sách...'}
-                              />
-                        </View>
-                    }
-
-                    {/* Loading Success */}
-                    {
-                    props.isReducerGetList.isGetListSuccess &&
+                   {
                         <View style = {{
                                           flex : 1,
                                       }}
@@ -148,25 +132,41 @@ class OderList extends Component {
                                                 paddingHorizontal : 10
                                           }}
                               >
-                                  <FlatList style = {{
-                                                        flex : 1,
-                                                    }}
-                                            renderItem =  {this.renderItemProduct}
-                                            data = {props.isReducerGetList.isListProduct}
-                                  />
+                                        {
+                                          isReducerGetList.isGetListSuccess && isReducerGetList.isListProduct.length > 0 ?
+                                              <FlatList style = {{
+                                                                    flex : 1,
+                                                                }}
+                                                        renderItem =  {this.renderItemProduct}
+                                                        data = {props.isReducerGetList.isListProduct}
+                                              />
+                                          :
+                                              <Text_Custom  content = {
+                                                                        isReducerGetList.isGetingList ?
+                                                                          'Đang tải dữ liệu'
+                                                                        :
+                                                                          isReducerGetList.isGetListSuccess && isReducerGetList.isListProduct.length == 0 ?
+                                                                            'Không có dữ liệu'
+                                                                          :
+                                                                            isReducerGetList.isGetListError ? 
+                                                                              isReducerGetList.isGetListDescription
+                                                                            :
+                                                                              'Vui lòng chọn mã shop'
+                                                                      }
+                                              />
+                                        }
+                                    
                             </View>
                             
                             <View style = {{
                                                 flex : 0.3,
                                           }}
                             >
-                                  <OderProduct
+                                  <OderProduct  OderQR = {false}
                                   />
                             </View>
                         </View>
                     }
-
-                   
       </SafeAreaView>
     );
   }

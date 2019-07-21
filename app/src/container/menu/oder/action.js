@@ -1,5 +1,6 @@
 import * as constants from '../../../../configapp/constants';
 import * as Firebase from '../../../../configapp/configfirebase';
+import {showBlockUI, hideBlockUI} from '../../../component/block-ui';
 
 export const start_list_product = ()=> {
     return {
@@ -22,12 +23,11 @@ export const get_list_success = (data)=> {
 }
 
 
-export const getListProduct = (idShop = 1000) => {
+export const getListProduct = (idShop) => {    
     return (dispatch,getState) =>{
         if(getState().isReducerGetList.isGetingList) return ;
         dispatch(start_list_product());
-
-        return Firebase.FirebaseGetListProduct().then((reponse)=>{
+        return Firebase.FirebaseGetListProduct(idShop).then((reponse)=>{
             if(!reponse.error){
                 dispatch(get_list_success(reponse.data));
             }else {
@@ -36,7 +36,7 @@ export const getListProduct = (idShop = 1000) => {
         },(reject)=>{
             dispatch(get_list_error(reject.description));
         }).catch((error)=>{
-            dispatch(get_list_error('Lỗi hệ thống xử lí'));
+            dispatch(get_list_error(constants.DESCRIPTION_ERROR_APP));
         })
     }
 }
@@ -83,5 +83,53 @@ export const remove_product_oder = (product) => {
                 data : listOder,
             })
         }else return;
+    }
+}
+
+export const start_oder_product = () => {
+    return {
+        type :  constants.START_ODER_PRODUCT
+    }
+}
+
+export const success_oder_product = () => {
+    return {
+        type :  constants.ODER_PRODUCT_SUCCESS,
+    }
+}
+
+export const error_oder_product = (error) => {
+    return {
+        type :  constants.ODER_PRODUCT_ERROR,
+        error : error
+    }
+}
+
+export const oder_product = (id_Shop, id_Table,) => {
+    return (dispatch,getSate) =>{
+        if(getSate().isReducerOder.isOdering) return ;
+        let listOder = [];
+        getSate().isReducerOder.isListOder.forEach(value=>{
+            listOder.push({
+                id_product :  value.id_product,
+                number : value.number,
+            })
+        }) ;
+        const id_User = 100;
+        const id_Shop = 1000;
+        showBlockUI();
+        dispatch(start_oder_product());
+        Firebase.FirebaseOder(id_User,id_Shop,id_Table,listOder).then((reponse)=>{
+            if(reponse.success){
+                dispatch(success_oder_product());
+                hideBlockUI(constants.RESULT_BLOCK_SUCCESS);
+            }else {
+                dispatch(error_oder_product(reponse.description));
+                hideBlockUI(constants.RESULT_BLOCK_ERROR,reponse.description);
+            }
+        }).catch((error)=>{
+                dispatch(error_oder_product(error.description));
+                hideBlockUI(constants.RESULT_BLOCK_ERROR,reponse.description);
+        });
     }
 }

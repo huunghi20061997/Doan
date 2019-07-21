@@ -19,6 +19,9 @@ const initStateListProduct = {
     isGetListDescription: '',
 }
 
+
+
+
 const isReducerGetList = function (state = initStateListProduct, action){
     switch (action.type) { 
         case constants.START_GET_LIST_PRODUCT:
@@ -116,6 +119,7 @@ const isReducerOder = function (state = initStateOder, action){
         case constants.ODER_PRODUCT_SUCCESS:
             return {
                 ...state,
+                isListOder : [],
                 isOdering : false,
                 isOderSuccess : true,
                 isOderError : false,
@@ -134,5 +138,7 @@ const isReducerOder = function (state = initStateOder, action){
         default : return state ; break ; 
     }
 }
+
+
 
 export { isReducerOder,isReducerGetList };

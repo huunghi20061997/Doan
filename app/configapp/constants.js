@@ -52,7 +52,10 @@ export const BACKGROUND_MODAL_APP           =           'rgba(0, 0, 0, 0.2)';
 
 
 export const STRING_PRICE           =           '.000đ';
-export const SIZE_TEXT_MEDIUM       =           15; 
+export const SIZE_TEXT_MEDIUM       =           15;
+export const DEFAULT_ID             =           1000;
+export const RESULT_BLOCK_SUCCESS   =           'RESULT_BLOCK_SUCCESS';
+export const RESULT_BLOCK_ERROR     =           'RESULT_BLOCK_ERROR';
 
 
 
@@ -71,9 +74,6 @@ export const PADDING_DEFAULT_APP            =           10;
 export const MARGIN_DEFAULT_APP             =           10;
 export const HEIGHT_DEFAULT_TEXT_INPUT      =           44;
 
-
-
-
 //**                    End                                                */
 
 
@@ -81,6 +81,24 @@ export const HEIGHT_DEFAULT_TEXT_INPUT      =           44;
 
 export const RESULT_OK                      =           'OK';
 export const RESULT_ERROR                   =           'ERROR';
+export const DESCRIPTION_ERROR_SYSTEM       =           'Lỗi hệ thống';
+export const DESCRIPTION_ERROR_APP          =           'Lỗi hệ thống xử lí';
+export const DESCRIPTION_ERROR_ADD_DOC      =           'Lỗi khi đặt hàng';
+
+
+//**                    End                                                */
+
+
+//**            Constants Name DataBase In FireBase                                        */
+
+export const MENU_PRODUCT                       =           'menu_product';
+export const SHOP                               =           {
+                                                                ID_SHOP : 'id_shop',
+                                                            };
+export const TABLE_ODER                         =           'table_oder';
+export const BILL_ODER                          =           'bill_oder';
+
+
 
 
 //**                    End                                                */
