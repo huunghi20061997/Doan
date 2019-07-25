@@ -122,6 +122,7 @@ export const oder_product = (id_Shop, id_Table,) => {
         Firebase.FirebaseOder(id_User,id_Shop,id_Table,listOder).then((reponse)=>{
             if(reponse.success){
                 dispatch(success_oder_product());
+                
                 hideBlockUI(constants.RESULT_BLOCK_SUCCESS);
             }else {
                 dispatch(error_oder_product(reponse.description));

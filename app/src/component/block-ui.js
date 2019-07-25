@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text,SafeAreaView,Modal } from 'react-native';
+import { View, Text,SafeAreaView,Modal,TouchableOpacity } from 'react-native';
 import BlockUIManager from "./block-ui-manager";
 import {
     BallIndicator,
@@ -15,11 +15,14 @@ export class BlockUI extends Component {
     super(props);
     this._showBlockUI = this._showBlockUI.bind(this);
     this._hideBlockUI = this._hideBlockUI.bind(this);
+    this.actionSubmit = null ; 
     this.state = {
         isLoading : false,
         isSuccess : false,
         isError : false, 
-        description : ''
+        description : '',
+        showButtonSubmit : false,
+        showButtonCancle : false,
     };
   }
 
@@ -32,14 +35,14 @@ export class BlockUI extends Component {
     });
 }
 
-_hideBlockUI(result,description){
+_hideBlockUI(result,description,showButtonSubmit,actionSubmit,showButtonCancle){
     
     let Result = false ; 
     if(result == constants.RESULT_BLOCK_SUCCESS){
         this.setState({
             isSuccess : true,
             isError : false, 
-            description : ''
+            description : description
         });
     }else{
         this.setState({
@@ -48,11 +51,19 @@ _hideBlockUI(result,description){
             description : description, 
         });
     }
-    setTimeout(()=>{
+    if(showButtonSubmit){
+        if(actionSubmit !== null) this.actionSubmit = actionSubmit ; 
         this.setState({
-            isLoading: false,
-        })
-    },2000);
+            showButtonSubmit : showButtonSubmit,
+            showButtonCancle : showButtonCancle
+        });
+    }else{
+        setTimeout(()=>{
+            this.setState({
+                isLoading: false,
+            })
+        },2000);
+    }
 }
 
 componentDidMount() {
@@ -86,10 +97,6 @@ componentWillUnmount() {
                                         backgroundColor: constants.BLACK_COLOR_OPACITY_70
                                 }}
                 >
-                        {/* <UIActivityIndicator 
-                                    size={ 30 }
-                                    color= { constants.GRAY_COLOR }
-                        /> */}
                         <View   style = {{
                                             position : 'absolute',
                                             bottom : 50,
@@ -111,14 +118,65 @@ componentWillUnmount() {
                                                                         this.state.isLoading && (this.state.isSuccess == this.state.isError) ? 
                                                                             'Đang xử lí'
                                                                         :
-                                                                            this.state.isSuccess ?
-                                                                                'Thành công'
-                                                                            :
-                                                                                this.state.description
+                                                                            this.state.description
                                                                     }
                                         />
+                                        {
+                                                this.state.showButtonSubmit &&
+                                                    <View   style = {{
+                                                                marginTop : 10,
+                                                                height : 30,
+                                                                width : '100%',
+                                                                flexDirection : 'row',
+                                                            }}
+                                                    >
+                                                            <TouchableOpacity   style = {{
+                                                                                    flex : this.state.showButtonCancle ? 0.5 : 1,
+                                                                                    justifyContent : 'center',
+                                                                                    borderRadius : 6,
+                                                                                    backgroundColor : constants.BACKGROUND_ITEM_APP,
+                                                                                    alignItems : 'center',
+                                                                                    marginRight : this.state.showButtonCancle ? 10 : 0,
+                                                                                }}
+                                                                        onPress = {()=> {
+                                                                                            this.setState({
+                                                                                                            isLoading : false
+                                                                                                        },()=>{
+                                                                                                            if(this.props.actionSubmit){
+                                                                                                                this.props.actionSubmit();
+                                                                                                            }
+                                                                                                        });
+                                                                                        }}
+                                                    >
+                                                                        <Text_Custom content = {'OK'}
+                                                                        />
+                                                    </TouchableOpacity>
+                                                            
+                                                            {
+                                                            this.state.showButtonCancle &&
+                                                                    <TouchableOpacity   style = {{
+                                                                                                    flex : 0.5,
+                                                                                                    justifyContent : 'center',
+                                                                                                    alignItems : 'center',
+                                                                                                    backgroundColor : constants.BACKGROUND_ITEM_APP,
+                                                                                                    borderRadius : 6,
+                                                                                                    marginLeft : 10,
+                                                                                                }}
+                                                                                        onPress = {()=> {
+                                                                                                            this.setState({
+                                                                                                                            isLoading : false
+                                                                                                                        });
+                                                                                                        }}
+                                                                    >
+                                                                                        <Text_Custom content = {'Cancle'}
+                                                                                        />
+                                                                    </TouchableOpacity>
+                                                            }
+                                                    </View>
+                                        }
                                 </View>
                         </View>
+                        
                 </View>
         </Modal>
     );
@@ -131,7 +189,7 @@ export function showBlockUI() {
     ref._showBlockUI();
 }
 
-export function hideBlockUI(result,description = '') {
+export function hideBlockUI(result,description = '',showButtonSubmit = false,actionSubmit = null,showButtonCancle = false) {
     const ref = BlockUIManager.getDefault();
-    ref._hideBlockUI(result,description);
+    ref._hideBlockUI(result,description,showButtonSubmit,actionSubmit,showButtonCancle);
 }

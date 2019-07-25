@@ -1,8 +1,10 @@
 package com.coffeemanagerapp;
 
 import android.app.Application;
-
+import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import com.facebook.react.ReactApplication;
+import com.devstepbcn.wifi.AndroidWifiPackage;
+import com.tadasr.IOTWifi.IOTWifiPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactlibrary.RNWifiPackage;
 import org.reactnative.camera.RNCameraPackage;
@@ -29,12 +31,15 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new AndroidWifiPackage(),
+            new IOTWifiPackage(),
             new VectorIconsPackage(),
             new RNWifiPackage(),
             new RNCameraPackage(),
             new RNFirebasePackage(),
             new RNGestureHandlerPackage(),
-              new RNFirebaseAuthPackage()
+              new RNFirebaseAuthPackage(),
+              new RNFirebaseFirestorePackage()
       );
     }
 

@@ -48,27 +48,33 @@ export const FirebaseGetListProduct = (idShop) => {
           let dataReceiver = [];
           reponse._docs.forEach(DocumentSnapshot => {
             dataReceiver.push(DocumentSnapshot._data);
-          })
-          resolve({
-            data : dataReceiver,
-            error : false,
-            description : '',
           });
-        }else{
-          reject({
-            data : [],
-            error : true,
-            description : 'Không có dữ liệu'
-          })
-        }
+          resolve({
+                    data : dataReceiver,
+                    error : false,
+                    description : '',
+                  });
+        }else {
+                reject({
+                  data : [],
+                  error : true,
+                  description : 'Không có dữ liệu'
+                })
+              }
       }).catch((error)=>{
         reject({
           data : [],
           error : true,
           description : constants.DESCRIPTION_ERROR_SYSTEM
         })
-      })
-    })
+      }).catch((error)=>{
+                          reject({
+                                  data : [],
+                                  error : true,
+                                  description : constants.DESCRIPTION_ERROR_SYSTEM
+                                });
+      });
+    });
 }
 
 /**Funtion get list table in shop*/

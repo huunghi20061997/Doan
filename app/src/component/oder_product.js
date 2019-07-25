@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text,TextInput,TouchableOpacity } from 'react-native';
+import { View, Text,TextInput,TouchableOpacity,SafeAreaView,ScrollView } from 'react-native';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actionOder from '../container/menu/oder/action';
@@ -71,159 +71,162 @@ class OderProduct extends Component {
   render() {
     const price = this.getPrice();
     return (
-      <View style = {{
-                        flex : 1,
-                        marginHorizontal : 10,
-                        borderRadius : 6,
-                        padding : 10,
-                        backgroundColor : constants.BACKGROUND_PRIMARY_APP
-                    }}
-      >
+            <View style = {{
+                              flex : 1,
+                              marginHorizontal : 10,
+                              borderRadius : 6,
+                              padding : 10,
+                              backgroundColor : constants.BACKGROUND_PRIMARY_APP
+                          }}
+            >
 
-        {/* Modal List Product Odered */}
-        <ListOderModal  visible = {this.state.modalListOder}
-                        onPressShowHideModal = {this.showHideModalListOder}
-        />
+              {/* Modal List Product Odered */}
+              <ListOderModal  visible = {this.state.modalListOder}
+                              onPressShowHideModal = {this.showHideModalListOder}
+              />
 
 
-        <View style = {{
-                          flexDirection : 'row',
-                      }}
-        >
-            <Text_Custom    content = {'Tổng tiền'}
-                            style = {{
-                                        color : constants.GRAY_COLOR,
-                                        fontWeight : 'bold'
-                                    }}
-                            styleView = {{
-                                            justifyContent : 'flex-start',
-                                            alignItems : 'center',
-                                            flex : 0.5
-                                        }}
-            />
-
-            {
-                <View style = {{
-                                  backgroundColor : !this.props.OderQR ? constants.BACKGROUND_ITEM_APP : 'transparent',
-                                  borderRadius : 50,
-                                  flex : 0.5,
-                                  marginRight : 10,
-                                  padding : 10,
-                                  height : '100%'
-                              }}
-                >
-                      {
-                        !this.props.OderQR &&
-                        <TextInput  
-                                    placeholder = {'Nhập mã shop'}
-                                    placeholderTextColor = {constants.GRAY_COLOR}
-                                    onChangeText = {this.setIdShop}
-                        />
-                      }
-                </View>
-            }
-        </View>
-        <View   style = {{
-                            flex : 1,
-                            padding : 10,
-                        }}
-        >
-                <View   style = {{
-                                    flex : 1,
-                                    alignItems : 'center',
-                                    flexDirection : 'row',
-                                    borderRadius : 6,
-                                    paddingHorizontal : 10,
-                                    backgroundColor : constants.BACKGROUND_ITEM_APP
-                                }}
-                >
-                        <View   style = {{
-                                            flex : 1,
-                                            justifyContent : 'center',
-                                            alignItems : 'flex-start',
-                                        }}
-                        >
-                                <Text_Custom    content = {price}
-                                                style = {{
-                                                            color : constants.GRAY_COLOR
-                                                        }}
-                                />
-                        </View>
-
-                        <Icon   name = {'clipboard-list'}
-                                size = {15}
-                                onPress = {this.showHideModalListOder}
-                                style = {{
-                                            alignSelf : 'center'
-                                        }}
-                                color = {constants.GRAY_COLOR}
-                        />
-                </View>
-        </View>
-
-        <View   style = {{
-                            flex : 1,
-                            flexDirection : 'row'
-                        }}
-        >
-                {/* <Text_Custom    content = {this.state.numberTable == 0 ? 'Chọn bàn' : this.state.numberTable}
-                                style = {{
-                                            color : constants.BACKGROUND_GREEN
-                                        }}
-                                styleView = {{
-                                                backgroundColor : constants.BACKGROUND_GREEN_OPACITY,
-                                                flex : 0.5,
-                                                height : '70%',
-                                                alignSelf : 'center',
-                                                borderRadius : 50,
-                                                marginRight: 10,
-                                            }}
-                /> */}
-                {
-                !this.props.OderQR &&
-                <View
-                        style = {{
-                                        backgroundColor : constants.BACKGROUND_GREEN_OPACITY,
-                                        flex : 0.5,
-                                        height : '70%',
-                                        alignSelf : 'center',
-                                        borderRadius : 50,
-                                        marginRight: 10,
-                                    }}
-                
-                >
-                        <TextInput  
-                                    placeholder = {'Nhập số bàn'}
-                                    style = {{
-                                                flex : 1,
-                                                marginHorizontal : 10,
-                                            }}
-                                    placeholderTextColor = {constants.BACKGROUND_GREEN}
-                                    onChangeText = {this.setIdShop}
-                        />
-                      
-                </View>
-                }
-
-                <TouchableOpacity onPress={this.submitOder}
+              <View style = {{
+                                flexDirection : 'row',
+                                paddingVertical : 10,
+                            }}
+              >
+                  <Text_Custom    content = {'Tổng tiền'}
                                   style = {{
-                                              backgroundColor : constants.BACKGROUND_ORANGE_OPACITY,
-                                              flex : !this.props.OderQR ? 0.5 : 1,
+                                              color : constants.GRAY_COLOR,
+                                              fontWeight : 'bold'
+                                          }}
+                                  styleView = {{
+                                                  justifyContent : 'flex-start',
+                                                  alignItems : 'center',
+                                                  flex : !this.props.OderQR ? 0.5 : 1,
+                                              }}
+                  />
+
+                  {
+                      <View style = {{
+                                        backgroundColor : !this.props.OderQR ? constants.BACKGROUND_ITEM_APP : 'transparent',
+                                        borderRadius : 50,
+                                        flex : 0.5,
+                                        marginRight : 10,
+                                        height : '100%'
+                                    }}
+                      >
+                            {
+                              !this.props.OderQR &&
+                              <TextInput  
+                                          placeholder = {'Nhập mã shop'}
+                                          placeholderTextColor = {constants.GRAY_COLOR}
+                                          onChangeText = {this.setIdShop}
+                                          style = {{
+                                                      paddingHorizontal: 10,
+                                                  }}
+                              />
+                            }
+                      </View>
+                  }
+              </View>
+              <View   style = {{
+                                  flex : 1,
+                                  padding : 10,
+                              }}
+              >
+                      <View   style = {{
+                                          flex : 1,
+                                          alignItems : 'center',
+                                          flexDirection : 'row',
+                                          borderRadius : 6,
+                                          paddingHorizontal : 10,
+                                          backgroundColor : constants.BACKGROUND_ITEM_APP
+                                      }}
+                      >
+                              <View   style = {{
+                                                  flex : 1,
+                                                  justifyContent : 'center',
+                                                  alignItems : 'flex-start',
+                                              }}
+                              >
+                                      <Text_Custom    content = {price}
+                                                      style = {{
+                                                                  color : constants.GRAY_COLOR
+                                                              }}
+                                      />
+                              </View>
+
+                              <Icon   name = {'clipboard-list'}
+                                      size = {15}
+                                      onPress = {this.showHideModalListOder}
+                                      style = {{
+                                                  alignSelf : 'center'
+                                              }}
+                                      color = {constants.GRAY_COLOR}
+                              />
+                      </View>
+              </View>
+
+              <View   style = {{
+                                  flex : 1,
+                                  flexDirection : 'row'
+                              }}
+              >
+                      {/* <Text_Custom    content = {this.state.numberTable == 0 ? 'Chọn bàn' : this.state.numberTable}
+                                      style = {{
+                                                  color : constants.BACKGROUND_GREEN
+                                              }}
+                                      styleView = {{
+                                                      backgroundColor : constants.BACKGROUND_GREEN_OPACITY,
+                                                      flex : 0.5,
+                                                      height : '70%',
+                                                      alignSelf : 'center',
+                                                      borderRadius : 50,
+                                                      marginRight: 10,
+                                                  }}
+                      /> */}
+                      {
+                      !this.props.OderQR &&
+                      <View
+                              style = {{
+                                              backgroundColor : constants.BACKGROUND_GREEN_OPACITY,
+                                              flex : 0.5,
+                                              height : '70%',
                                               alignSelf : 'center',
                                               borderRadius : 50,
-                                              height : '70%',
-                                              marginHorizontal: !this.props.OderQR ? 0 : 20,
+                                              marginRight: 10,
                                           }}
-                >
-                    <Text_Custom    content = {'Thanh toán'}
-                                    style = {{
-                                                color : constants.BACKGROUND_ORANGE
-                                            }}
-                    />
-                 </TouchableOpacity>
-        </View>
-        
-      </View>
+                      
+                      >
+                              <TextInput  
+                                          placeholder = {'Nhập số bàn'}
+                                          style = {{
+                                                      flex : 1,
+                                                      marginHorizontal : 10,
+                                                  }}
+                                          placeholderTextColor = {constants.BACKGROUND_GREEN}
+                                          onChangeText = {this.setIdShop}
+                              />
+                            
+                      </View>
+                      }
+
+                      <TouchableOpacity onPress={this.submitOder}
+                                        style = {{
+                                                    backgroundColor : constants.BACKGROUND_ORANGE_OPACITY,
+                                                    flex : !this.props.OderQR ? 0.5 : 1,
+                                                    alignSelf : 'center',
+                                                    borderRadius : 50,
+                                                    height : '70%',
+                                                    marginHorizontal: !this.props.OderQR ? 0 : 20,
+                                                }}
+                      >
+                          <Text_Custom    content = {'Thanh toán'}
+                                          style = {{
+                                                      color : constants.BACKGROUND_ORANGE
+                                                  }}
+                          />
+                      </TouchableOpacity>
+              </View>
+              
+            </View>
     );
   }
 }

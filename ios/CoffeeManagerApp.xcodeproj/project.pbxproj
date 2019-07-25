@@ -63,6 +63,7 @@
 		82A5EC070A2342B38A45A97C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E799174376E46A7B64DF2D5 /* Octicons.ttf */; };
 		632485C6DA7A495CA056B9FD /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B732C80C05FC4FA1B93E7E87 /* SimpleLineIcons.ttf */; };
 		E659B5EB7A43484CB1C5B1B3 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 660B7D45BCD74267B8D2C7B7 /* Zocial.ttf */; };
+		B594BDD5922C4818925EDDDE /* libIOTWifi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F6EED08990C4605987D8624 /* libIOTWifi.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -434,6 +435,8 @@
 		2E799174376E46A7B64DF2D5 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		B732C80C05FC4FA1B93E7E87 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		660B7D45BCD74267B8D2C7B7 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9F931E1883204890A7AF4C24 /* IOTWifi.xcodeproj */ = {isa = PBXFileReference; name = "IOTWifi.xcodeproj"; path = "../node_modules/react-native-iot-wifi/ios/IOTWifi.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		3F6EED08990C4605987D8624 /* libIOTWifi.a */ = {isa = PBXFileReference; name = "libIOTWifi.a"; path = "libIOTWifi.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -459,6 +462,7 @@
 				C74F2966979649538FA116FE /* libRNFirebase.a in Frameworks */,
 				FCB2413388988344F52284DE /* libPods-CoffeeManagerApp.a in Frameworks */,
 				E71F060ABD824C71A83DB6C7 /* libRNWifi.a in Frameworks */,
+				B594BDD5922C4818925EDDDE /* libIOTWifi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,6 +634,7 @@
 				B067E38E619D497397D67A40 /* RNGestureHandler.xcodeproj */,
 				26E77BC01CDA435D94C22E6B /* RNFirebase.xcodeproj */,
 				E24F612747B7416B8D475F57 /* RNWifi.xcodeproj */,
+				9F931E1883204890A7AF4C24 /* IOTWifi.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1327,11 +1332,13 @@
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-wifi/ios",
+					"$(SRCROOT)/../node_modules/react-native-iot-wifi/ios",
 				);
 				INFOPLIST_FILE = CoffeeManagerApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/CoffeeManagerApp\"",
 					"\"$(SRCROOT)/CoffeeManagerApp\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1357,11 +1364,13 @@
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-wifi/ios",
+					"$(SRCROOT)/../node_modules/react-native-iot-wifi/ios",
 				);
 				INFOPLIST_FILE = CoffeeManagerApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/CoffeeManagerApp\"",
 					"\"$(SRCROOT)/CoffeeManagerApp\"",
 				);
 				OTHER_LDFLAGS = (

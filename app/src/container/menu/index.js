@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { View, Text,ImageBackground,TouchableOpacity,StyleSheet } from 'react-native';
 import * as constants from '../../../configapp/constants';
 import Text_Custom from '../../component/text_custom';
+import {showBlockUI,hideBlockUI} from '../../component/block-ui';
 
 export default class MenuApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
     };
+  }
+
+  componentDidMount(){
   }
 
   render() {    

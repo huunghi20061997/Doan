@@ -1,38 +1,74 @@
 import React, { Component } from 'react';
-import { View, Text,SafeAreaView,TouchableOpacity } from 'react-native';
+import { View, Text,SafeAreaView,TouchableOpacity,Platform,StyleSheet } from 'react-native';
 import * as constants from '../../../../configapp/constants';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {Button} from 'native-base';
 import Text_Custom from '../../../component/text_custom';
-import WifiManager from 'react-native-wifi';
+import wifi from 'react-native-android-wifi';
+import {showBlockUI,hideBlockUI} from '../../../component/block-ui';
+
+
 
 
 
 export default class LoginWifi extends Component {
   constructor(props) {
     super(props);
+    this.numberLogin = 0; 
     this.state = {
+      focusedScreen : false
     };
+    this.loginWifi = this.loginWifi.bind(this);
   }
+
+  loginWifi(name,password){
+    if(Platform.OS == 'android'){
+          this.numberLogin += 1 ; 
+          wifi.findAndConnect('Anhduy','Hoicaigi', (found) => {
+            if (found) {
+              hideBlockUI(constants.RESULT_BLOCK_SUCCESS,'Đăng nhập wifi thành công');
+              this.props.navigation.goBack();
+            } else {
+              if(this.numberLogin <= 3){
+                setTimeout(()=>{
+                  this.loginWifi(name,password);
+                },1000);
+              }else{
+                hideBlockUI(constants.RESULT_BLOCK_ERROR,'Đăng nhập wifi thất bại');
+                this.props.navigation.goBack();
+              }
+            }
+        });
+      }
+}
 
   readDataQR = (Data) => {
     let objectData = {};
     if(Data.hasOwnProperty('data')){
       objectData = JSON.parse(Data.data);
     }
+    showBlockUI();
     if(objectData.hasOwnProperty('name') && objectData.hasOwnProperty('password')){
-      WifiManager.getCurrentWifiSSID()
-      .then((ssid) => {
-          console.log("Your current connected wifi SSID is ",ssid)
-      }, () => {
-          console.log('Cannot get current SSID!')
-      })
-      WifiManager.loadWifiList((reponse)=>{
-        console.log(">>>>>> ",reponse)
-      },(error)=>{
-        console.log(">>>>>>1 ",error)
-      })
-    }
+      wifi.isEnabled((isEnabled)=>{
+        if(!isEnabled) {
+          hideBlockUI(constants.RESULT_BLOCK_ERROR,'Vui lòng bật wifi',true);
+          this.props.navigation.goBack();
+        }
+        else {
+          this.loginWifi(objectData.name,objectData.password);
+        }
+    })
+  }
+}
+
+  componentDidMount(){
+    const { navigation } = this.props;
+    navigation.addListener('willFocus', () =>
+                                              this.setState({ focusedScreen: true })
+                          );
+    navigation.addListener('willBlur', () =>
+                                              this.setState({ focusedScreen: false })
+                          );
   }
 
   render() {
@@ -57,13 +93,25 @@ export default class LoginWifi extends Component {
                             />
                     </View>
 
-                    <QRCodeScanner  cameraStyle = {{
-                                                      height : constants.HEIGHT_SCREEN/2,
-                                                      width : constants.WIDTH_SCREEN * 0.7,
-                                                      alignSelf: 'center',
-                                                  }}
-                                    onRead = {this.readDataQR}
-                    />
+                    {
+                      this.state.focusedScreen ?
+                          <QRCodeScanner  cameraStyle = {{
+                                                          height : constants.HEIGHT_SCREEN/2,
+                                                          width : constants.WIDTH_SCREEN * 0.7,
+                                                          alignSelf: 'center',
+                                                          borderRadius:  6,
+                                                      }}
+                                        onRead = {this.readDataQR}
+                                        isRepeatScan={true}
+                          />
+                      : 
+                          <View style = {styles.waitTurnOnCamera}
+                          >
+                                <Text_Custom  content = {'Đang bật camera'}
+                                />
+                          </View>
+                    }
+                    
                     <View style = {{
                                       flex : 1,
                                       flexDirection : 'row',
@@ -113,3 +161,16 @@ export default class LoginWifi extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+    waitTurnOnCamera : {
+      height : constants.HEIGHT_SCREEN/2,
+      width : constants.WIDTH_SCREEN * 0.7,
+      alignSelf: 'center',
+      borderColor : 'silver',
+      borderWidth : 1,
+      borderRadius : 6, 
+      alignItems : 'center',
+      justifyContent : 'center',
+    }
+})

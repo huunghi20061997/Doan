@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text,SafeAreaView,FlatList,ImageBackground,TouchableOpacity } from 'react-native';
+import { View, Text,SafeAreaView,FlatList,ImageBackground,KeyboardAvoidingView,TouchableOpacity,ScrollView,KeyboardEvent } from 'react-native';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -109,7 +109,7 @@ class OderList extends Component {
   }
 
   componentDidMount(){
-    
+  
   }
 
 
@@ -118,13 +118,19 @@ class OderList extends Component {
     const isReducerGetList = props.isReducerGetList; 
     return (
       <SafeAreaView style = {{
-                                flex : 1,
-                                backgroundColor : constants.BACKGROUND_BELOW_APP
-                            }}
+                                        flex : 1,
+                                    }}
       >
-                   {
+          <ScrollView 
+                      style = {{
+                                  flex : 1,
+                              }}
+          >
+                  {
                         <View style = {{
                                           flex : 1,
+                                          backgroundColor : constants.BACKGROUND_BELOW_APP,
+                                          height : constants.HEIGHT_SCREEN - 80,
                                       }}
                         >
                               <View style = {{
@@ -158,15 +164,16 @@ class OderList extends Component {
                                     
                             </View>
                             
-                            <View style = {{
-                                                flex : 0.3,
-                                          }}
-                            >
-                                  <OderProduct  OderQR = {false}
-                                  />
-                            </View>
+                              <View style = {{
+                                                  flex : 0.3,
+                                            }}
+                              >
+                                    <OderProduct  OderQR = {false}
+                                    />
+                              </View>
                         </View>
-                    }
+                  }
+          </ScrollView>
       </SafeAreaView>
     );
   }
