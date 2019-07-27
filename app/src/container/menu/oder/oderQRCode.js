@@ -20,14 +20,6 @@ class OderQRCode extends Component {
     this.loadingOrder = false ; 
   }
 
-  readDataQR = (Data) => {
-    let objectData = {};
-    // if(Data.hasOwnProperty('data')){
-    //   objectData = JSON.parse(Data.data);
-    // }
-    console.log('>>>>>>>Receiver Data QR', Data);
-  }
-
   readDataQRCamera = (Data) => {
     Vibration.vibrate();
     if(this.loadingOrder == true) return;
@@ -68,20 +60,10 @@ class OderQRCode extends Component {
       >
                 <View style = {{
                                   flex : 0.7,
-                                  paddingVertical : 30,
-                                  paddingHorizontal : 15,
                               }}
                 >
                       {
                       this.state.focusedScreen ?
-                          // <QRCodeScanner  cameraStyle = {{
-                          //                                 height : constants.HEIGHT_SCREEN/2,
-                          //                                 width : constants.WIDTH_SCREEN * 0.7,
-                          //                                 alignSelf: 'center',
-                          //                             }}
-                          //               onRead = {this.readDataQR}
-                          //               isRepeatScan={true}
-                          // />
                           <RNCamera style = {{
                                                 flex : 1,
                                             }}

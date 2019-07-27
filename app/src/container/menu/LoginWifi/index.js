@@ -6,6 +6,7 @@ import {Button} from 'native-base';
 import Text_Custom from '../../../component/text_custom';
 import wifi from 'react-native-android-wifi';
 import {showBlockUI,hideBlockUI} from '../../../component/block-ui';
+import {RNCamera} from 'react-native-camera';
 
 
 
@@ -77,7 +78,7 @@ export default class LoginWifi extends Component {
                                 flex : 1,
                             }}
       >
-                    <View  style = {{
+                    {/* <View  style = {{
                                       height : 100,
                                       width : '100%',
                                       justifyContent : 'center',
@@ -91,18 +92,21 @@ export default class LoginWifi extends Component {
                                                       fontSize: 20,
                                                   }}
                             />
-                    </View>
-
+                    </View> */}
+                    <View style = {{
+                                      flex : 0.7,
+                                  }}
+                    >
                     {
                       this.state.focusedScreen ?
-                          <QRCodeScanner  cameraStyle = {{
-                                                          height : constants.HEIGHT_SCREEN/2,
-                                                          width : constants.WIDTH_SCREEN * 0.7,
-                                                          alignSelf: 'center',
-                                                          borderRadius:  6,
-                                                      }}
-                                        onRead = {this.readDataQR}
-                                        isRepeatScan={true}
+                          <RNCamera style = {{
+                                                flex : 1,
+                                            }}
+                                    isRepeatScan={true}
+                                    autoFocus={RNCamera.Constants.AutoFocus.on}
+                                    autoFocusPointOfInterest= {{x:0.5,y:0.5}}
+                                    whiteBalance = {RNCamera.Constants.WhiteBalance.auto}
+                                    onGoogleVisionBarcodesDetected = {this.readDataQR}
                           />
                       : 
                           <View style = {styles.waitTurnOnCamera}
@@ -111,11 +115,11 @@ export default class LoginWifi extends Component {
                                 />
                           </View>
                     }
-                    
+                    </View>
+
                     <View style = {{
-                                      flex : 1,
+                                      flex : 0.3,
                                       flexDirection : 'row',
-                                      marginTop : 20,
                                   }}
                     >
                           <View style = {{
@@ -164,9 +168,7 @@ export default class LoginWifi extends Component {
 
 const styles = StyleSheet.create({
     waitTurnOnCamera : {
-      height : constants.HEIGHT_SCREEN/2,
-      width : constants.WIDTH_SCREEN * 0.7,
-      alignSelf: 'center',
+      flex : 1,
       borderColor : 'silver',
       borderWidth : 1,
       borderRadius : 6, 

@@ -12,7 +12,17 @@ var firebaseConfig = {
     appId: "1:687735349163:web:286dc45428d5970e"
   };
 
-  
+const ERROR_ORDER = {
+                      success : false,
+                      error : true,
+                      description : constants.DESCRIPTION_ERROR_ADD_DOC,
+                    }
+
+const ERROR_ORDER_SYSTEM = {
+                              success : false,
+                              error : true,
+                              description : constants.DESCRIPTION_ERROR_SYSTEM,
+                            }  
   // Initialize Firebase
 export const FirebaseConfig = firebase.initializeApp(firebaseConfig) ; 
 
@@ -77,21 +87,29 @@ export const FirebaseGetListProduct = (idShop) => {
     });
 }
 
-/**Funtion get list table in shop*/
-// export const FirebaseGetListProduct = (idShop) => {
-//   return new Promise ((resolve,reject)=>{
-//       firebaseData.settings({timestampsInSnapshots : true});
-//       firebaseData.collection(constants.TABLE_ODER).where(constants.SHOP.ID_SHOP,'==',idShop).get()
-//       .then((reponse)=>{
-//           if(reponse.hasOwnProperty('_docs')){
-//             let dataReceiver = [];
-//             reponse._docs.forEach(DocumentSnapshot => {
-//               dataReceiver.push(DocumentSnapshot._data);
-//             })
-//           }
-//       })
-//   }
-// }
+/**Funtion check id_table and id_shop*/
+export const FirebaseCheckOrder = (idTable,idShop) => {
+  return new Promise ((resolve,reject)=>{
+      const firebaseData = FirebaseConfig.firestore();
+      firebaseData.settings({timestampsInSnapshots : true});
+      firebaseData.collection(constants.TABLE.TABLE_ODER).where(constants.SHOP.ID_SHOP,'==',idShop)
+      .where(constants.TABLE.ID_TABLE_ODER, '==',idTable).get()
+      .then((reponse)=>{
+          if(reponse.hasOwnProperty('_docs')){
+              resolve({
+                  success : true,
+                  data : reponse._docs,
+                  error : false,
+                  description : '',
+                });
+          }else {
+              reject(ERROR_ORDER);
+          }
+      }).catch((error)=>{
+        reject(ERROR_ORDER_SYSTEM);
+      })
+    })
+}
 
 export const FirebaseOder = (id_User,id_Shop,id_Table,list_Oder) => {
   return new Promise ((resolve,reject)=>{

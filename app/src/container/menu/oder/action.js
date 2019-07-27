@@ -105,32 +105,51 @@ export const error_oder_product = (error) => {
     }
 }
 
-export const oder_product = (id_Shop, id_Table,) => {
+
+
+export const oder_product = (id_Shop, id_Table) => {
     return (dispatch,getSate) =>{
         if(getSate().isReducerOder.isOdering) return ;
-        let listOder = [];
-        getSate().isReducerOder.isListOder.forEach(value=>{
-            listOder.push({
-                id_product :  value.id_product,
-                number : value.number,
-            })
-        }) ;
-        const id_User = 100;
-        const id_Shop = 1000;
         showBlockUI();
-        dispatch(start_oder_product());
-        Firebase.FirebaseOder(id_User,id_Shop,id_Table,listOder).then((reponse)=>{
-            if(reponse.success){
-                dispatch(success_oder_product());
-                
-                hideBlockUI(constants.RESULT_BLOCK_SUCCESS);
-            }else {
-                dispatch(error_oder_product(reponse.description));
-                hideBlockUI(constants.RESULT_BLOCK_ERROR,reponse.description);
+        
+        /**check table and shop is exist*/
+        Firebase.FirebaseCheckOrder(id_Table,id_Shop)
+        .then((reponse)=>{
+            const data = reponse.data.length > 0 ? reponse.data[0]._data : null ; 
+            if(data !== null && data.id_shop == id_Shop && data.id_table == id_Table){
+                    // Start Order
+                    let listOder = [];
+                    getSate().isReducerOder.isListOder.forEach(value=>{
+                        listOder.push({
+                            id_product :  value.id_product,
+                            number : value.number,
+                        })
+                    }) ;
+                    const id_User = 1000;
+                    dispatch(start_oder_product());
+                    Firebase.FirebaseOder(id_User,id_Shop,id_Table,listOder).then((reponse)=>{
+                        if(reponse.success){
+                            dispatch(success_oder_product());
+                            hideBlockUI(constants.RESULT_BLOCK_SUCCESS,constants.ODER_SUCCESS);
+                        }else {
+                            dispatch(error_oder_product(reponse.description));
+                            hideBlockUI(constants.RESULT_BLOCK_ERROR,reponse.description);
+                        }
+                    }).catch((error)=>{
+                            dispatch(error_oder_product(error.description));
+                            hideBlockUI(constants.RESULT_BLOCK_ERROR,reponse.description);
+                    });
+            }else{
+                hideBlockUI(constants.RESULT_BLOCK_ERROR,constants.CHECK_TABLE_SHOP);
             }
+        },(error)=>{
+            dispatch(error_oder_product(error.description));
+            hideBlockUI(constants.RESULT_BLOCK_ERROR,reponse.description);
         }).catch((error)=>{
-                dispatch(error_oder_product(error.description));
-                hideBlockUI(constants.RESULT_BLOCK_ERROR,reponse.description);
-        });
+            dispatch(error_oder_product(error.description));
+            hideBlockUI(constants.RESULT_BLOCK_ERROR,reponse.description);
+        })
+        
+        
     }
 }

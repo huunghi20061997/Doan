@@ -84,7 +84,9 @@ export const RESULT_ERROR                   =           'ERROR';
 export const DESCRIPTION_ERROR_SYSTEM       =           'Lỗi hệ thống';
 export const DESCRIPTION_ERROR_APP          =           'Lỗi hệ thống xử lí';
 export const DESCRIPTION_ERROR_ADD_DOC      =           'Lỗi khi đặt hàng';
-
+export const CHECK_TABLE_SHOP               =           'Vui lòng kiểm tra lại bàn đặt';
+export const ODER_SUCCESS                   =           'Đặt hàng thành công';
+export const LENGHT_ID_DEFAULT              = 4; 
 
 //**                    End                                                */
 
@@ -95,10 +97,32 @@ export const MENU_PRODUCT                       =           'menu_product';
 export const SHOP                               =           {
                                                                 ID_SHOP : 'id_shop',
                                                             };
-export const TABLE_ODER                         =           'table_oder';
+export const TABLE                              =           {
+                                                                TABLE_ODER : 'table_oder',
+                                                                ID_TABLE_ODER : 'id_table',
+                                                            };
 export const BILL_ODER                          =           'bill_oder';
+//**                    End                                                */
 
 
+//**            Object error                                        */
+const errorDefault =    {
+                                success : false,
+                                error : true,
+                                description : '',
+                        }
+export const ERROR_ORDER =  {
+                                ...errorDefault,
+                                description : DESCRIPTION_ERROR_ADD_DOC,
+                            }
 
+export const ERROR_ORDER_SYSTEM =   {
+                                        ...errorDefault,
+                                        description : DESCRIPTION_ERROR_SYSTEM,
+                                    }
 
+export const ERROR_ORDER_CHECK_TABLE =      {
+                                                ...errorDefault,
+                                                description : CHECK_TABLE_SHOP,
+                                            } 
 //**                    End                                                */

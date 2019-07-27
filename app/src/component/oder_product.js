@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text,TextInput,TouchableOpacity,SafeAreaView,ScrollView } from 'react-native';
+import { View, Text,TextInput,TouchableOpacity,SafeAreaView,ScrollView,StyleSheet } from 'react-native';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actionOder from '../container/menu/oder/action';
@@ -20,11 +20,12 @@ class OderProduct extends Component {
       numberTable : NUMBER_TABLE_DEFAULT,
       id_shop : '',
       id_table : '',
+      checkSubmit : false,
     };
     this.setIdShop = this.setIdShop.bind(this);
     this.submitOder = this.submitOder.bind(this);
     this.showHideModalListOder = this.showHideModalListOder.bind(this);
-
+    this.checkOrder = this.checkOrder.bind(this);
   }
 
   getPrice(){
@@ -40,6 +41,16 @@ class OderProduct extends Component {
     }
   }
 
+  checkOrder(){
+    if(this.props.OderQR){
+      return true ; 
+    }else{
+      if(this.state.id_shop.length >= constants.LENGHT_ID_DEFAULT && this.state.id_table.length > 0)
+        return true ;
+      else return false
+    }
+  }
+
   showHideModalListOder(){
     this.setState({
       modalListOder : !this.state.modalListOder, 
@@ -48,36 +59,42 @@ class OderProduct extends Component {
 
   submitOder(){
     const {id_shop,id_table} = this.state;
-    this.props.actionOder.oder_product(id_shop,id_table);
+    const numberIdShop = Number(id_shop);
+    const numberIdTable = Number(id_table);
+    this.props.actionOder.oder_product(numberIdShop,numberIdTable);
   }
 
   setIdShop = (text) => {
       this.setState({
         id_shop : text
       },()=>{
-        if(this.state.id_shop.length > 3){
+        if(this.state.id_shop.length >= constants.LENGHT_ID_DEFAULT){
+            this.setState ({
+                            checkSubmit : this.state.id_table.length > 0 ? true : false
+                          })
           const numberId = Number(this.state.id_shop);
           this.props.actionOder.getListProduct(numberId);
         }
-      })
+      });
   }
 
   setTableOder = (idTable)=>{
     this.setState({
       id_table :idTable,
-    })
+    },()=>{
+      if(this.state.id_table.length > 0){
+          this.setState ({
+                          checkSubmit : this.state.id_shop.length >= constants.LENGHT_ID_DEFAULT ? true : false
+                        })
+      }
+    });
   }
 
   render() {
     const price = this.getPrice();
+    const canOrder = this.checkOrder();
     return (
-            <View style = {{
-                              flex : 1,
-                              marginHorizontal : 10,
-                              borderRadius : 6,
-                              padding : 10,
-                              backgroundColor : constants.BACKGROUND_PRIMARY_APP
-                          }}
+            <View style = {styles.container}
             >
 
               {/* Modal List Product Odered */}
@@ -88,17 +105,18 @@ class OderProduct extends Component {
 
               <View style = {{
                                 flexDirection : 'row',
-                                paddingVertical : 10,
                             }}
               >
                   <Text_Custom    content = {'Tổng tiền'}
                                   style = {{
                                               color : constants.GRAY_COLOR,
-                                              fontWeight : 'bold'
+                                              fontWeight : 'bold',
+                                              
                                           }}
                                   styleView = {{
                                                   justifyContent : 'flex-start',
                                                   alignItems : 'center',
+                                                  marginVertical: 15,
                                                   flex : !this.props.OderQR ? 0.5 : 1,
                                               }}
                   />
@@ -120,6 +138,7 @@ class OderProduct extends Component {
                                           onChangeText = {this.setIdShop}
                                           style = {{
                                                       paddingHorizontal: 10,
+                                                      flex : 1,
                                                   }}
                               />
                             }
@@ -128,7 +147,7 @@ class OderProduct extends Component {
               </View>
               <View   style = {{
                                   flex : 1,
-                                  padding : 10,
+                                  paddingVertical : 15,
                               }}
               >
                       <View   style = {{
@@ -169,19 +188,7 @@ class OderProduct extends Component {
                                   flexDirection : 'row'
                               }}
               >
-                      {/* <Text_Custom    content = {this.state.numberTable == 0 ? 'Chọn bàn' : this.state.numberTable}
-                                      style = {{
-                                                  color : constants.BACKGROUND_GREEN
-                                              }}
-                                      styleView = {{
-                                                      backgroundColor : constants.BACKGROUND_GREEN_OPACITY,
-                                                      flex : 0.5,
-                                                      height : '70%',
-                                                      alignSelf : 'center',
-                                                      borderRadius : 50,
-                                                      marginRight: 10,
-                                                  }}
-                      /> */}
+
                       {
                       !this.props.OderQR &&
                       <View
@@ -202,7 +209,8 @@ class OderProduct extends Component {
                                                       marginHorizontal : 10,
                                                   }}
                                           placeholderTextColor = {constants.BACKGROUND_GREEN}
-                                          onChangeText = {this.setIdShop}
+                                          
+                                          onChangeText = {this.setTableOder}
                               />
                             
                       </View>
@@ -210,17 +218,18 @@ class OderProduct extends Component {
 
                       <TouchableOpacity onPress={this.submitOder}
                                         style = {{
-                                                    backgroundColor : constants.BACKGROUND_ORANGE_OPACITY,
+                                                    backgroundColor : canOrder ? constants.BACKGROUND_ORANGE_OPACITY : constants.BACKGROUND_ITEM_APP ,
                                                     flex : !this.props.OderQR ? 0.5 : 1,
                                                     alignSelf : 'center',
                                                     borderRadius : 50,
                                                     height : '70%',
                                                     marginHorizontal: !this.props.OderQR ? 0 : 20,
                                                 }}
+                                        disabled =  { canOrder ? false : true}
                       >
                           <Text_Custom    content = {'Thanh toán'}
                                           style = {{
-                                                      color : constants.BACKGROUND_ORANGE
+                                                      color : canOrder ? constants.BACKGROUND_ORANGE : constants.GRAY_COLOR
                                                   }}
                           />
                       </TouchableOpacity>
@@ -245,3 +254,20 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(OderProduct);
 
+const styles = StyleSheet.create({
+  container : {
+    shadowColor: "#000",
+    shadowOffset: {
+                    width: 0,
+                    height: 1,
+                  },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    flex : 1,
+    marginHorizontal : 10,
+    borderRadius : 6,
+    padding : 10,
+    backgroundColor : constants.BACKGROUND_PRIMARY_APP
+  }
+})
