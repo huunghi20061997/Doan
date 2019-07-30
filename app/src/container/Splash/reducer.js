@@ -10,8 +10,9 @@ const initStateNetwork = {
 }
  
 const authenReducer = function (state = initStateAuthen, action){
-    switch (action.type) { 
-        case "AUTHEN_SUCCESS":
+    switch (action.type) {
+        case "LOGIN_SUCCESS" :
+            //|| "LOGIN_SUCCESS"
             return {
                 ...state,
                 isAuthenFetching: false,
@@ -20,7 +21,7 @@ const authenReducer = function (state = initStateAuthen, action){
                 isAuthenDescription: '',
             };
             break;
-
+        
         case "START_AUTHENING_USER": 
             return {
                 ...state,

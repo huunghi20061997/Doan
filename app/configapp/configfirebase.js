@@ -12,38 +12,55 @@ var firebaseConfig = {
     appId: "1:687735349163:web:286dc45428d5970e"
   };
 
+
+
 const ERROR_ORDER = {
                       success : false,
                       error : true,
                       description : constants.DESCRIPTION_ERROR_ADD_DOC,
                     }
 
-const ERROR_ORDER_SYSTEM = {
+const ERROR_ORDER_SYSTEM  = {
                               success : false,
                               error : true,
                               description : constants.DESCRIPTION_ERROR_SYSTEM,
-                            }  
+                            }
+
+const OBJECT_AUTHEN       = {
+                                  success : false,
+                                  error : false,
+                                  description : '',
+                                  objectData : null,
+                            }
   // Initialize Firebase
 export const FirebaseConfig = firebase.initializeApp(firebaseConfig) ; 
+const firebaseData = FirebaseConfig.firestore();
+firebaseData.settings({timestampsInSnapshots : true});
+
 
 /**Funtion check user and password login */
 export const FirebaseGetDataUser = (user,password) => {
   return new Promise((resolve,reject)=>{
     const firebaseData = FirebaseConfig.firestore();
     firebaseData.settings({timestampsInSnapshots : true});
-    firebaseData.collection('Authen').where('NB_Phone','==',Number(user)).get()
+    firebaseData.collection('Authen').where('NB_Phone','==',Number(user)).
+    where('Password' , '==' , password).get()
     .then((reponse)=>{
-        resolve({
-          objectData : reponse._docs,
-        })
+        resolve ({
+                    ...OBJECT_AUTHEN,
+                    success : true,
+                    objectData : reponse._docs,
+                })
         return ;
-        //where('Password','==','Huunghi97')
     }).catch((error)=>{
       reject({
-        error : error,
-      })
+                ...OBJECT_AUTHEN,
+                success : false,
+                error : true,
+                description : constants.DESCRIPTION_ERROR_SYSTEM,
+            })
     })
-  })
+  });
 }
 
 
@@ -167,5 +184,10 @@ export const FirebaseOder = (id_User,id_Shop,id_Table,list_Oder) => {
 }
 
 
-
+// /**Funtion for sent SMS and Verify Phone Authen */
+export const FirebaseRegister = (numberPhone = '939649712') => {
+  return new Promise((resolve,reject)=> {
+    
+  })
+}
 

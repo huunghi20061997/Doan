@@ -1,5 +1,8 @@
 import * as constants from '../../../configapp/constants';
 import {FirebaseConfig,FirebaseGetDataUser} from '../../../configapp/configfirebase';
+import {AsyncStorage} from 'react-native';
+import {NavigationActions} from 'react-navigation';
+
 
 export const actionStartLogin = () => {
     return {
@@ -25,12 +28,17 @@ export const actionLoginUser = (user,password) =>{
         dispath(actionStartLogin());
         FirebaseGetDataUser(user,password)
         .then((reponse)=>{
-            
-            if(reponse.objectData.length > 0){
-                dispath(actionLoginSuccess());
-            }
-            else{
-                dispath(actionLoginError('Tài khoản chưa đăng kí'));
+            if(reponse.success){
+                const data = reponse.objectData.length > 0 ? reponse.objectData[0]._data : null ; 
+                if(data !== null){
+                        AsyncStorage.setItem(constants.TOKEN_AUTHEN,data.ID_User).then((value)=>{
+                            dispath(actionLoginSuccess());
+                        }).catch((error)=>{
+                            dispath(actionLoginError('Lỗi không lưu thông tin đăng nhập'));
+                        });
+                }else {
+                    dispath(actionLoginError('Số điện thoại chưa đăng kí'));
+                }
             }
         })
         .catch((error)=>{

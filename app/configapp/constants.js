@@ -10,6 +10,8 @@ export const START_LOGIN_USER       =   'START_LOGIN_USER';
 export const LOGIN_SUCCESS          =   'LOGIN_SUCCESS';
 export const LOGIN_ERROR            =   'LOGIN_ERROR';
 
+export const TOKEN_AUTHEN           = 'USER_AUTHEN';
+
 /**Reducer Oder */
 export const ADD_ODER_PRODUCT               = 'ADD_ODER_PRODUCT';
 export const REMOVE_ODER_PRODUCT            = 'REMOVE_ODER_PRODUCT';
@@ -56,6 +58,7 @@ export const SIZE_TEXT_MEDIUM       =           15;
 export const DEFAULT_ID             =           1000;
 export const RESULT_BLOCK_SUCCESS   =           'RESULT_BLOCK_SUCCESS';
 export const RESULT_BLOCK_ERROR     =           'RESULT_BLOCK_ERROR';
+export const AREAN_CODE             =           '+84';
 
 
 

@@ -44,6 +44,14 @@ class Login extends Component {
     })
   }
 
+  componentDidUpdate(prevProps,prevSate){
+    if(this.props.authenReducer.isAuthenSuccess !== prevProps.authenReducer.isAuthenSuccess){
+      if(this.props.authenReducer.isAuthenSuccess){
+        this.props.navigation.navigate('DrawerApp');
+      }
+    }
+  }
+
   checkLogin(){
     this.props.actionAuthen.actionLoginUser(this.state.userName,this.state.passWord);
   }
