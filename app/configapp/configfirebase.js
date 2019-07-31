@@ -136,7 +136,7 @@ export const FirebaseOder = (id_User,id_Shop,id_Table,list_Oder) => {
       firebaseData.collection(constants.BILL_ODER).get().then(reponse=> {
         if(reponse._docs !== null && reponse._docs !== undefined){
           //Get size collection for setting ID for oder
-          const countDoc = constants.DEFAULT_ID + reponse._docs.length ; 
+          const countDoc = constants.DEFAULT_ID + reponse._docs.length; 
           const dataOder =  {
                               ID_User : Number(id_User),//User custom 
                               id_oder : countDoc,
@@ -191,3 +191,95 @@ export const FirebaseRegister = (numberPhone = '939649712') => {
   })
 }
 
+
+/** Funtion register Account */
+export const FirebaseRegisterAccount = (name,numberPhone,Password) =>{
+    return new Promise((resolve,reject)=> {
+      firebaseData.collection(constants.AUTHEN).where('NB_Phone','==',Number(numberPhone)).get().then(reponse=> {
+        if(reponse._docs !== null && reponse._docs !== undefined){
+            if(reponse._docs.length == 0 ){
+                firebaseData.collection(constants.AUTHEN).get().then((reponseAuthen)=>{
+                    const countDoc = constants.DEFAULT_ID + reponseAuthen._docs.length;
+                    const dataRegister =  {
+                                              ID_User : 1000,
+                                              NB_Phone : numberPhone,
+                                              Password : Password,
+                                              User_Name : name,
+                                              id_type : constants.DEFAULT_ID
+                                          }
+                    firebaseData.collection(constants.AUTHEN).add(dataRegister).then((reponse)=>{
+                      resolve({
+                              ...OBJECT_AUTHEN,
+                              success : true,
+                              objectData : reponse._docs
+                            });
+                    },(error)=>{
+                      reject({
+                              ...OBJECT_AUTHEN,
+                              error : true,
+                              description : constants.ERROR_REGISTER_ACCOUNT,
+                              objectData : null,
+                            });
+                      return ; 
+                    }).catch((error)=>{
+                      reject({
+                              ...OBJECT_AUTHEN,
+                              error : true,
+                              description : constants.DESCRIPTION_ERROR_SYSTEM,
+                              objectData : null,
+                            });
+                      return ; 
+                    })
+                },(error)=>{
+                  reject({
+                          ...OBJECT_AUTHEN,
+                          error : true,
+                          description : constants.ERROR_SYSTEM_GET_DATA,
+                          objectData : null,
+                        });
+            return ; 
+                }).catch((error)=>{
+                        reject({
+                                ...OBJECT_AUTHEN,
+                                error : true,
+                                description : constants.DESCRIPTION_ERROR_SYSTEM,
+                                objectData : null,
+                              });
+                        return ; 
+                })
+            }else{
+              reject({
+                      ...OBJECT_AUTHEN,
+                      error : true,
+                      description : constants.DESCRIPTION_ERROR_APP,
+                      objectData : null,
+                    });
+              return ; 
+            }
+      }else{
+              reject({
+                      ...OBJECT_AUTHEN,
+                      error : true,
+                      description : constants.DESCRIPTION_ERROR_APP,
+                      objectData : null,
+                    });
+              return ; 
+      }
+      },(error)=>{
+                  reject({
+                            ...OBJECT_AUTHEN,
+                            error : true,
+                            description : constants.DESCRIPTION_ERROR_APP,
+                            objectData : null,
+                        });
+                  return; 
+      }).catch((error)=>{
+                          reject({
+                                  ...OBJECT_AUTHEN,
+                                  error : true,
+                                  description : constants.DESCRIPTION_ERROR_SYSTEM,
+                                  objectData : null,
+                                });
+                                return ; 
+      });
+})}

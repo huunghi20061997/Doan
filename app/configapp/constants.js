@@ -28,6 +28,12 @@ export const GET_LIST_SUCCESS               = 'GET_LIST_SUCCESS';
 export const GET_LIST_ERROR                 = 'GET_LIST_ERROR';
 /**End =>>> Reducer Oder */
 
+/**Const Reducer Register */
+export const START_REGISTER_PRODUCT         = 'START_REGISTER_PRODUCT';
+export const ODER_REGISTER_SUCCESS          = 'ODER_REGISTER_SUCCESS';
+export const ODER_REGISTER_ERROR            = 'ODER_REGISTER_ERROR';
+/**End Const Reducer Register */
+
 //**                    End                                                */
 
 
@@ -89,6 +95,10 @@ export const DESCRIPTION_ERROR_APP          =           'Lỗi hệ thống xử
 export const DESCRIPTION_ERROR_ADD_DOC      =           'Lỗi khi đặt hàng';
 export const CHECK_TABLE_SHOP               =           'Vui lòng kiểm tra lại bàn đặt';
 export const ODER_SUCCESS                   =           'Đặt hàng thành công';
+export const ACCOUNT_EXIST                  =           'Tài khoản đã tồn tại';
+export const ERROR_SYSTEM_GET_DATA          =           'Lỗi hệ thống lấy dữ liệu';
+export const ERROR_REGISTER_ACCOUNT         =           'Lỗi trong quá trình đăng kí';
+
 export const LENGHT_ID_DEFAULT              = 4; 
 
 //**                    End                                                */
@@ -105,6 +115,8 @@ export const TABLE                              =           {
                                                                 ID_TABLE_ODER : 'id_table',
                                                             };
 export const BILL_ODER                          =           'bill_oder';
+export const AUTHEN                             =           'Authen'; 
+
 //**                    End                                                */
 
 

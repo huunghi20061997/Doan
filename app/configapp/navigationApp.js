@@ -74,7 +74,7 @@ const AppStackNav = createStackNavigator({
         screen : DrawerApp
     }
     },{
-        initialRouteName : 'Login',
+        initialRouteName : 'Register',
 })
 
 
