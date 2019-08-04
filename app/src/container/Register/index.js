@@ -56,7 +56,6 @@ class Register extends Component {
 
   registerAccount(){
       if(this.state.newPassword === this.state.retypePassword){
-        console.log('>>>>>',this.state.newPassword,this.state.retypePassword);
         this.props.actionRegister.registerAccount(this.state.name,this.state.numberPhone,this.state.newPassword);
       }else{
         Alert.alert(

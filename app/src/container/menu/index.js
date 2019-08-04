@@ -67,8 +67,12 @@ export default class MenuApp extends Component {
                                 marginTop : 20,
                                 flexDirection : 'row',
                             }}
+                                
             >
-                    <View    style = {styles.item}
+                    <TouchableOpacity       style = {styles.item}
+                                            onPress = {()=>{
+                                                this.props.navigation.navigate('Pay');
+                                            }}
                     >
                             <ImageBackground    style = {styles.styleImage}
                                                 source = {require('../../../resource/image/pay.png')}
@@ -80,7 +84,7 @@ export default class MenuApp extends Component {
                                                         fontSize: 15,
                                                     }}
                             />
-                    </View>
+                    </TouchableOpacity>
 
                     <View   style = {styles.item}
                     >

@@ -144,6 +144,7 @@ export const FirebaseOder = (id_User,id_Shop,id_Table,list_Oder) => {
                               id_table : Number(id_Table),
                               list_oder : list_Oder,
                               time_pay : firebase.firestore.FieldValue.serverTimestamp(),
+                              paid : false,
                             }
           //Add data in firebase
           firebaseData.collection(constants.BILL_ODER).add(dataOder)
@@ -201,7 +202,7 @@ export const FirebaseRegisterAccount = (name,numberPhone,Password) =>{
                 firebaseData.collection(constants.AUTHEN).get().then((reponseAuthen)=>{
                     const countDoc = constants.DEFAULT_ID + reponseAuthen._docs.length;
                     const dataRegister =  {
-                                              ID_User : 1000,
+                                              ID_User : countDoc,
                                               NB_Phone : numberPhone,
                                               Password : Password,
                                               User_Name : name,
@@ -251,7 +252,7 @@ export const FirebaseRegisterAccount = (name,numberPhone,Password) =>{
               reject({
                       ...OBJECT_AUTHEN,
                       error : true,
-                      description : constants.DESCRIPTION_ERROR_APP,
+                      description : constants.ACCOUNT_EXIST,
                       objectData : null,
                     });
               return ; 
@@ -266,6 +267,7 @@ export const FirebaseRegisterAccount = (name,numberPhone,Password) =>{
               return ; 
       }
       },(error)=>{
+        console.log('>>>>>>>>>2',error)
                   reject({
                             ...OBJECT_AUTHEN,
                             error : true,
@@ -283,3 +285,129 @@ export const FirebaseRegisterAccount = (name,numberPhone,Password) =>{
                                 return ; 
       });
 })}
+
+//***Funtion get list Pay via User */
+export const FirebaseGetListPay = (idUser) => {
+  return new Promise ((resolve,reject)=>{
+    firebaseData.collection(constants.BILL_ODER)
+    .where('ID_User','==',Number(idUser))
+    .where('paid','==',false)
+    .get()
+    .then((reponse)=>{
+      if(reponse.hasOwnProperty('_docs')){
+        let dataReceiver = [];
+          let total_price = 0 ; 
+          reponse._docs.forEach(DocumentSnapshot => {
+            dataReceiver.push(DocumentSnapshot._data);
+          });
+          resolve ({
+                      data : dataReceiver,
+                      error : false,
+                      description : '',
+                  });
+      }else{
+        reject({
+                  data : [],
+                  error : true,
+                  description : constants.DESCRIPTION_ERROR_SYSTEM
+              });
+      }
+    })
+    .catch((error)=>{
+            reject({
+                      data : [],
+                      error : true,
+                      description : constants.DESCRIPTION_ERROR_SYSTEM
+                  });
+          })
+  })
+  .catch((error)=>{
+          reject({
+                    data : [],
+                    error : true,
+                    description : constants.DESCRIPTION_ERROR_SYSTEM
+                });
+        })
+}
+
+//***Funtion get total price or name shop bill */
+export const FirebaseGetItemPay = (isPrice = true,ArrayProduct  = [],id) => {
+  return new Promise ((resolve,reject)=>{
+      const nameTable = isPrice ? constants.MENU_PRODUCT : constants.SHOP.TABLE_SHOP ;
+      if(isPrice){
+      let arrayPromise = [];
+      ArrayProduct.forEach((value)=>{
+          arrayPromise.push(new Promise((resolve,rejecct)=>{
+                  firebaseData.collection(nameTable)
+                  .where('id_product','==',value.id_product)
+                  .get()
+                  .then((reponse)=>{
+                      if(reponse.hasOwnProperty('_docs')){
+                          resolve({
+                                    data : reponse._docs.length > 0 ? reponse._docs[0]._data : [],
+                                    error : false,
+                                    description : ''
+                                  })
+                      }
+                  },
+                  (error)=>{
+                    reject({
+                              data : [],
+                              error : true,
+                              description : constants.NOT_GET_DATA
+                          });
+                  })
+                  .catch((error)=>{
+                        reject({
+                                  data : [],
+                                  error : true,
+                                  description : constants.NOT_GET_DATA
+                              });
+                  });
+          }))
+      });
+      Promise.all(arrayPromise)
+      .then((reponse)=>{
+          resolve ({
+                      data : reponse,
+                      error : false,
+                  })
+      })
+      .catch((error)=>{
+        reject ({
+                    data : reponse,
+                    error : true,
+                })
+      })
+    }else{
+      firebaseData.collection(nameTable)
+      .where(constants.SHOP.ID_SHOP,'==',id)
+      .get()
+      .then((reponse)=>{
+        if(reponse.hasOwnProperty('_docs')){
+          resolve ({
+                    data : reponse._docs,
+                    error : false,
+                    description : ''
+                  })
+        }
+      },
+      (error)=>{
+        reject({
+                    data : [],
+                    error : true,
+                    description : constants.NOT_GET_DATA
+              });
+        return ; 
+      })
+      .catch((error)=>{
+        reject ({
+                    data : [],
+                    error : true,
+                    description : constants.NOT_GET_DATA
+                });
+        return ; 
+      })
+    }
+  });
+}

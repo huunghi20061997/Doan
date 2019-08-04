@@ -28,11 +28,21 @@ export const GET_LIST_SUCCESS               = 'GET_LIST_SUCCESS';
 export const GET_LIST_ERROR                 = 'GET_LIST_ERROR';
 /**End =>>> Reducer Oder */
 
-/**Const Reducer Register */
+//***                           Const Reducer Register                    */
 export const START_REGISTER_PRODUCT         = 'START_REGISTER_PRODUCT';
 export const ODER_REGISTER_SUCCESS          = 'ODER_REGISTER_SUCCESS';
 export const ODER_REGISTER_ERROR            = 'ODER_REGISTER_ERROR';
-/**End Const Reducer Register */
+//***                           End Const Reducer Register                    */
+
+//***                           Const Reducer Pay                    */
+
+export const START_GET_LIST_PAY             = 'START_GET_LIST_PAY';
+export const GET_LIST_PAY_SUCCESS           = 'GET_LIST_PAY_SUCCESS';
+export const GET_LIST_PAY_ERROR             = 'GET_LIST_PAY_ERROR';
+
+export const START_PAID_PRODUCT             = 'START_PAID_PRODUCT';
+export const PAID_PRODUCT_SUCCESS           = 'PAID_PRODUCT_SUCCESS';
+export const PAID_PRODUCT_ERROR             = 'PAID_PRODUCT_ERROR';
 
 //**                    End                                                */
 
@@ -98,6 +108,12 @@ export const ODER_SUCCESS                   =           'Đặt hàng thành cô
 export const ACCOUNT_EXIST                  =           'Tài khoản đã tồn tại';
 export const ERROR_SYSTEM_GET_DATA          =           'Lỗi hệ thống lấy dữ liệu';
 export const ERROR_REGISTER_ACCOUNT         =           'Lỗi trong quá trình đăng kí';
+export const ERROR_GET_TOKEN                =           'Không lấy được tài khoản vui lòng thử lại';
+export const FINISHED                       =           'Hoàn thành';
+export const NOT_GET_TOTAL_PRICE            =           'Không lấy được tổng tiền';
+export const NOT_GET_DATA                   =           'Không lấy được dữ liệu';
+
+
 
 export const LENGHT_ID_DEFAULT              = 4; 
 
@@ -109,6 +125,7 @@ export const LENGHT_ID_DEFAULT              = 4;
 export const MENU_PRODUCT                       =           'menu_product';
 export const SHOP                               =           {
                                                                 ID_SHOP : 'id_shop',
+                                                                TABLE_SHOP : 'shop'
                                                             };
 export const TABLE                              =           {
                                                                 TABLE_ODER : 'table_oder',

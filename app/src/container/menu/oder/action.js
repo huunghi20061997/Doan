@@ -1,6 +1,7 @@
 import * as constants from '../../../../configapp/constants';
 import * as Firebase from '../../../../configapp/configfirebase';
 import {showBlockUI, hideBlockUI} from '../../../component/block-ui';
+import {AsyncStorage} from 'react-native';
 
 export const start_list_product = ()=> {
     return {
@@ -23,7 +24,7 @@ export const get_list_success = (data)=> {
 }
 
 
-export const getListProduct = (idShop) => {    
+export const getListProduct = (idShop) => {
     return (dispatch,getState) =>{
         if(getState().isReducerGetList.isGetingList) return ;
         dispatch(start_list_product());
@@ -125,21 +126,33 @@ export const oder_product = (id_Shop, id_Table) => {
                             number : value.number,
                         })
                     }) ;
-                    const id_User = 1000;
-                    dispatch(start_oder_product());
-                    Firebase.FirebaseOder(id_User,id_Shop,id_Table,listOder).then((reponse)=>{
-                        if(reponse.success){
-                            dispatch(success_oder_product());
-                            hideBlockUI(constants.RESULT_BLOCK_SUCCESS,constants.ODER_SUCCESS);
-                        }else {
-                            dispatch(error_oder_product(reponse.description));
-                            hideBlockUI(constants.RESULT_BLOCK_ERROR,reponse.description);
+                    
+                    AsyncStorage.getItem(constants.TOKEN_AUTHEN).then((value)=>{
+                        if(value !== null){
+                            const id_User = value;
+                            dispatch(start_oder_product());
+                            Firebase.FirebaseOder(id_User,id_Shop,id_Table,listOder).then((reponse)=>{
+                                if(reponse.success){
+                                    dispatch(success_oder_product());
+                                    hideBlockUI(constants.RESULT_BLOCK_SUCCESS,constants.ODER_SUCCESS);
+                                }else {
+                                    dispatch(error_oder_product(reponse.description));
+                                    hideBlockUI(constants.RESULT_BLOCK_ERROR,reponse.description);
+                                }
+                            }).catch((error)=>{
+                                    dispatch(error_oder_product(error.description));
+                                    hideBlockUI(constants.RESULT_BLOCK_ERROR,reponse.description);
+                            });
+                        }else{
+                            dispatch(error_oder_product(constants.ERROR_GET_TOKEN));
+                            hideBlockUI(constants.RESULT_BLOCK_ERROR,constants.ERROR_GET_TOKEN);
                         }
                     }).catch((error)=>{
-                            dispatch(error_oder_product(error.description));
-                            hideBlockUI(constants.RESULT_BLOCK_ERROR,reponse.description);
-                    });
+                        dispatch(error_oder_product(constants.ERROR_GET_TOKEN));
+                        hideBlockUI(constants.RESULT_BLOCK_ERROR,constants.ERROR_GET_TOKEN);
+                    })
             }else{
+                dispatch(error_oder_product(constants.CHECK_TABLE_SHOP));
                 hideBlockUI(constants.RESULT_BLOCK_ERROR,constants.CHECK_TABLE_SHOP);
             }
         },(error)=>{

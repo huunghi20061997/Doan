@@ -24,7 +24,7 @@ export const registerAccount = (name,numberPhone,password) => {
     return (dispath,getState) => {
         //if(getState().registerReducer.isRegisterFetching) return; 
         dispath(actionStartRegister());
-        Firebase.FirebaseRegisterAccount('Nguyễn Hữu Nghị','0939649712','Huunghi97').then((reponse)=>{
+        Firebase.FirebaseRegisterAccount(name,numberPhone,password).then((reponse)=>{
             if(reponse.success){
                 dispath(actionRegisterSuccess());
             }

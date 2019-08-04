@@ -18,7 +18,7 @@ import TabTopOrder from '../src/component/tabTopOder';
 import LoginWifi from '../src/container/menu/LoginWifi/index';
 import OderList from '../src/container/menu/oder/oderList';
 import OderQRCode from '../src/container/menu/oder/oderQRCode';
-
+import Pay from '../src/container/menu/pay/index';
 
 const TabTopOderApp = createMaterialTopTabNavigator({
     OderList : {
@@ -46,6 +46,9 @@ const DrawerApp = createDrawerNavigator({
     },
     TabTopOderApp : {
         screen : TabTopOderApp
+    },
+    Pay : {
+        screen : Pay
     }
 },{
         initialRouteName : 'Home',
@@ -74,7 +77,7 @@ const AppStackNav = createStackNavigator({
         screen : DrawerApp
     }
     },{
-        initialRouteName : 'Register',
+        initialRouteName : 'DrawerApp',
 })
 
 

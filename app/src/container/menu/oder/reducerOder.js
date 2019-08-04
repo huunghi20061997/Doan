@@ -7,8 +7,6 @@ const initStateOder = {
     isOderSuccess       : false,
     isOderError         : false,
     isOderDescription   : '',
-
-    
 }
 
 const initStateListProduct = {

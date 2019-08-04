@@ -29,17 +29,17 @@ class OderProduct extends Component {
   }
 
   getPrice(){
-    const listData = this.props.isReducerOder.isListOder ; 
+    const listData = this.props.isReducerOder.isListOder ;
+    let priceTotal = 0 ;
     if(listData.length > 0) {
-      let priceTotal = 0 ; 
       listData.forEach(currentItem => {
         priceTotal += (currentItem.price * currentItem.number) ;
-      })
-      return priceTotal + constants.STRING_PRICE ; 
-    }else {
-      return '0đ'
+      }); 
     }
+    return priceTotal; 
   }
+
+  
 
   checkOrder(){
     if(this.props.OderQR){
@@ -91,7 +91,8 @@ class OderProduct extends Component {
   }
 
   render() {
-    const price = this.getPrice();
+    const numberPrice = this.getPrice() ; 
+    const price = numberPrice + ( numberPrice > 0 ? constants.STRING_PRICE : 'đ');
     const canOrder = this.checkOrder();
     return (
             <View style = {styles.container}
