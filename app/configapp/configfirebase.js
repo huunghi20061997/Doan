@@ -132,7 +132,6 @@ export const FirebaseOder = (id_User,id_Shop,id_Table,list_Oder) => {
   return new Promise ((resolve,reject)=>{
       const firebaseData = FirebaseConfig.firestore();
       firebaseData.settings({timestampsInSnapshots : true});
-
       firebaseData.collection(constants.BILL_ODER).get().then(reponse=> {
         if(reponse._docs !== null && reponse._docs !== undefined){
           //Get size collection for setting ID for oder
@@ -196,7 +195,10 @@ export const FirebaseRegister = (numberPhone = '939649712') => {
 /** Funtion register Account */
 export const FirebaseRegisterAccount = (name,numberPhone,Password) =>{
     return new Promise((resolve,reject)=> {
-      firebaseData.collection(constants.AUTHEN).where('NB_Phone','==',Number(numberPhone)).get().then(reponse=> {
+      firebaseData.collection(constants.AUTHEN)
+      .where('NB_Phone','==',numberPhone)
+      .get()
+      .then(reponse=> {
         if(reponse._docs !== null && reponse._docs !== undefined){
             if(reponse._docs.length == 0 ){
                 firebaseData.collection(constants.AUTHEN).get().then((reponseAuthen)=>{
@@ -212,7 +214,7 @@ export const FirebaseRegisterAccount = (name,numberPhone,Password) =>{
                       resolve({
                               ...OBJECT_AUTHEN,
                               success : true,
-                              objectData : reponse._docs
+                              objectData :null
                             });
                     },(error)=>{
                       reject({

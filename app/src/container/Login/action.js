@@ -31,7 +31,7 @@ export const actionLoginUser = (user,password) =>{
             if(reponse.success){
                 const data = reponse.objectData.length > 0 ? reponse.objectData[0]._data : null ; 
                 if(data !== null){
-                        AsyncStorage.setItem(constants.TOKEN_AUTHEN,data.ID_User).then((value)=>{
+                        AsyncStorage.setItem(constants.TOKEN_AUTHEN,data.ID_User.toString()).then((value)=>{
                             dispath(actionLoginSuccess());
                         }).catch((error)=>{
                             dispath(actionLoginError('Lỗi không lưu thông tin đăng nhập'));

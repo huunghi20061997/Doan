@@ -92,6 +92,16 @@ class Register extends Component {
     }
   }
 
+  componentDidUpdate(prevProps,prevSate){
+      if(
+            this.props.registerReducer.isRegisterSuccess !== prevProps.registerReducer &&
+            this.props.registerReducer.isRegisterSuccess == true
+        )
+        {
+            this.props.navigation.navigate('Login');
+        }
+  }
+
   render() {
     return (
         <View   style = {{

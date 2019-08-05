@@ -16,11 +16,26 @@ class ItemPay extends Component {
     
     constructor(props){
         super(props);
+        this.selectPay = this.selectPay.bind(this);
         this.state = {
             expand : false,
             totalPrice : -2, //** -2 is case loading */
-            nameShop : 'Đang tải'
+            nameShop : 'Đang tải',
+            selectPaid : false,
         }
+
+    }
+
+    selectPay(){
+        this.setState({
+            selectPaid : !this.state.selectPaid
+        },()=>{
+            if(this.state.selectPaid){
+                this.props.selectItemPay(this.props.data.id_oder);
+            }else{
+                this.props.removeItemPay(this.props.data.id_oder);
+            }
+        })
     }
 
     componentDidMount(){
@@ -64,15 +79,16 @@ class ItemPay extends Component {
 
     render() {
         const data = this.props.data ;
-        const dateOderBill = new Date(data.time_pay.seconds*1000);
+        const dateOderBill = new Date(data.time_pay.seconds * 1000);
         return (
-            <View   style = {{
-                                width : '100%',
-                                marginBottom : 10,
-                                backgroundColor : 'white',
-                                borderRadius : 6,
-                                padding : 10,
-                            }}
+             <View              style = {{
+                                            width : '100%',
+                                            marginBottom : 10,
+                                            backgroundColor : 'white',
+                                            borderRadius : 6,
+                                            padding : 10,
+                                        }}
+                               
             >
                     <View   style = {{
                                         flexDirection : 'row'
@@ -141,16 +157,34 @@ class ItemPay extends Component {
                                                         }}
                             />
                     </View>
+                    
+                    <TouchableOpacity   style = {{
+                                                    width : 20,
+                                                    height : 20,
+                                                    borderRadius : 10,
+                                                    position : 'absolute',
+                                                    bottom : 10,
+                                                    right: 10,
+                                                    borderColor : 'silver',
+                                                    borderWidth : 0.5,
+                                                    backgroundColor : this.state.selectPaid ? 'green' : 'white',
+                                                }}
+                                        onPress = {this.selectPay}
+                    >
 
+                    </TouchableOpacity>
             </View>
         )
     }
 }
 
 
+
 class Pay extends Component {
   constructor(props) {
     super(props);
+    this.selectItemPay = this.selectItemPay.bind(this);
+    this.removeItemPay = this.removeItemPay.bind(this);
     this.state = {
         listPaid : []
     };
@@ -159,6 +193,31 @@ class Pay extends Component {
   componentDidMount(){
       this.props.actionPay.getListProduct();
   }
+
+  selectItemPay(idBill){
+    let index = this.state.listPaid.findIndex((value) => value === idBill);
+    if(index === -1){
+        let arrayCopy = [...this.state.listPaid];
+        arrayCopy.push(idBill);
+        this.setState({
+            listPaid : arrayCopy
+        },()=>{
+        });
+    }
+  }
+
+  removeItemPay(idBill){
+    let arrayCopy = [];
+    if(this.state.listPaid.length > 0){
+        arrayCopy = this.state.listPaid.find(value => value !== idBill);
+    }
+    
+    this.setState({
+        listPaid : arrayCopy !== undefined && arrayCopy !== null ? arrayCopy : []
+    },()=>{
+    });
+  }
+
 
   render() {
     const isReducerGetListPay = this.props.isReducerGetListPay;
@@ -190,16 +249,43 @@ class Pay extends Component {
                                                 isReducerGetListPay.isListPay.length == 0 ?
                                                     <Text_Custom    content = {'Không có hóa đơn thanh toán'}/>
                                                 :
-                                                    <FlatList   style = {{
-                                                                            flex : 1,
-                                                                            width : '100%',
-                                                                            padding : 10,
+                                                    <View   style = {{
+                                                                        flex : 1,
+                                                                        width : '100%'
+                                                                    }}
+                                                    >
+                                                            <FlatList   style = {{
+                                                                                    flex : 1,
+                                                                                    width : '100%',
+                                                                                    padding : 10,
+                                                                                }}
+                                                                        data = {isReducerGetListPay.isListPay}
+                                                                        renderItem = {({item,index})=> {
+                                                                            return  <ItemPay
+                                                                                                data = {item}
+                                                                                                selectItemPay = {this.selectItemPay}
+                                                                                                removeItemPay =  {this.removeItemPay}
+                                                                                    />
                                                                         }}
-                                                                data = {isReducerGetListPay.isListPay}
-                                                                renderItem = {({item,index})=> {
-                                                                    return <ItemPay data = {item}/>
-                                                                }}
-                                                    />
+                                                            />
+                                                            <TouchableOpacity   style = {{
+                                                                                            height : 30,
+                                                                                            width : '50%',
+                                                                                            marginVertical : 10,
+                                                                                            borderRadius : 50,
+                                                                                            alignSelf : 'center',
+                                                                                            justifyContent :'center',
+                                                                                            alignItems : 'center',
+                                                                                            backgroundColor : 'green'
+                                                                                        }}
+                                                            >
+                                                                                <Text_Custom    content = {'Thanh toán'}
+                                                                                                style = {{
+                                                                                                            color : 'white'
+                                                                                                        }}
+                                                                                />
+                                                            </TouchableOpacity>
+                                                    </View>
                                         }
                                 </View>
                             :
