@@ -59,3 +59,52 @@ export const getListProduct = () => {
         })
     }
 }
+
+export const update_list_pay = (arrayPay,arrayPaid) =>{
+    arrayPaid.forEach(element => {
+        arrayPay = arrayPay.filter(value => element !== value.dataPath);
+    });
+    return({
+        type : constants.UPDATE_LIST_PAY,
+        data : arrayPay
+    })
+}
+
+export const start_pay = ()=> {
+    return {
+        type : constants.START_PAID_PRODUCT,
+    }
+}
+
+export const success_pay = ()=> {
+    return {
+        type : constants.PAID_PRODUCT_SUCCESS,
+    }
+}
+
+export const error_pay = ()=> {
+    return {
+        type : constants.PAID_PRODUCT_ERROR,
+    }
+}
+
+export const payBill = (arrayBill) =>{
+    return (dispath,getSate) =>{
+            showBlockUI();
+            Firebase.FirebasePayBill(arrayBill)
+            .then((reponse)=>{
+                if(!reponse.error){
+                    hideBlockUI(constants.RESULT_BLOCK_SUCCESS,'Đã gửi yêu cầu thanh toán thành công');
+                    dispath(update_list_pay(getSate().isReducerGetListPay.isListPay,arrayBill));
+                    dispath(success_pay());
+                }
+            },(error)=>{
+                hideBlockUI(constants.RESULT_BLOCK_ERROR,'Thất bại vui lòng thử lại');
+                dispath(error_pay());
+            })
+            .catch((error)=>{
+                hideBlockUI(constants.RESULT_BLOCK_ERROR,'Lỗi hệ thống');
+                dispath(error_pay());
+            })
+    }
+}

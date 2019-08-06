@@ -39,6 +39,7 @@ export const ODER_REGISTER_ERROR            = 'ODER_REGISTER_ERROR';
 export const START_GET_LIST_PAY             = 'START_GET_LIST_PAY';
 export const GET_LIST_PAY_SUCCESS           = 'GET_LIST_PAY_SUCCESS';
 export const GET_LIST_PAY_ERROR             = 'GET_LIST_PAY_ERROR';
+export const UPDATE_LIST_PAY                = 'UPDATE_LIST_PAY';
 
 export const START_PAID_PRODUCT             = 'START_PAID_PRODUCT';
 export const PAID_PRODUCT_SUCCESS           = 'PAID_PRODUCT_SUCCESS';
@@ -112,6 +113,9 @@ export const ERROR_GET_TOKEN                =           'Không lấy được t
 export const FINISHED                       =           'Hoàn thành';
 export const NOT_GET_TOTAL_PRICE            =           'Không lấy được tổng tiền';
 export const NOT_GET_DATA                   =           'Không lấy được dữ liệu';
+export const ERROR_UPDATE                   =           'Lỗi không thể cập nhật';
+
+
 
 
 

@@ -27,7 +27,18 @@ const isReducerGetListPay = function (state = initStateListPay, action){
                 isGetListDescription: '',
             };
             break;
-
+        
+        case constants.UPDATE_LIST_PAY:
+            return {
+                ...state,
+                isListPay           : action.data,
+                isGetingList        : false,
+                isGetListSuccess    : true,
+                isGetListError      : false,
+                isGetListDescription: '',
+            };
+            break;
+        
         case constants.GET_LIST_PAY_SUCCESS:
             return {
                 ...state,
@@ -74,6 +85,7 @@ const isReducerPaid = function (state = initStatePaid, action){
                 isPaidDescription: '',
             };
             break;
+
         case constants.PAID_PRODUCT_ERROR:
             return {
                 ...state,

@@ -300,7 +300,10 @@ export const FirebaseGetListPay = (idUser) => {
         let dataReceiver = [];
           let total_price = 0 ; 
           reponse._docs.forEach(DocumentSnapshot => {
-            dataReceiver.push(DocumentSnapshot._data);
+            dataReceiver.push({
+              dataObject  : DocumentSnapshot._data,
+              dataPath    : DocumentSnapshot._ref._documentPath._parts[1]
+            });
           });
           resolve ({
                       data : dataReceiver,
@@ -413,3 +416,51 @@ export const FirebaseGetItemPay = (isPrice = true,ArrayProduct  = [],id) => {
     }
   });
 }
+
+//***Funtion Pay bill */
+export const FirebasePayBill = (listPay) => {
+  const payResult = {
+                        error : false,
+                        description : ''
+
+                    }
+  
+  console.log('this is listbill',listPay);
+  return new Promise ((resolve,reject)=>{
+      let arrayPromise = [];
+      listPay.forEach((value)=>{
+        let objectPromise = new Promise((resolve,reject)=>{
+          firebaseData.collection(constants.BILL_ODER).doc(value)
+          .update({paid : true})
+          .then((reponse)=>{
+              resolve({
+                        error : false,
+                        description : ''
+                      })
+          })
+          .catch((error)=>{
+                reject({
+                        error : true,
+                        description : constants.ERROR_UPDATE
+                      })
+          })
+        })
+        arrayPromise.push(objectPromise);
+      });
+      //---------End for loop-----------//
+      Promise.all(arrayPromise)
+      .then((reponse)=>{
+        resolve({
+                  error : false,
+                  description : ''
+                });
+      })
+      .catch((error)=>{
+        reject({
+                  error : true,
+                  description : constants.ERROR_UPDATE
+              });
+      })
+  })
+}
+

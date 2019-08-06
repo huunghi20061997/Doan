@@ -31,9 +31,9 @@ class ItemPay extends Component {
             selectPaid : !this.state.selectPaid
         },()=>{
             if(this.state.selectPaid){
-                this.props.selectItemPay(this.props.data.id_oder);
+                this.props.selectItemPay(this.props.data.dataPath);
             }else{
-                this.props.removeItemPay(this.props.data.id_oder);
+                this.props.removeItemPay(this.props.data.dataPath);
             }
         })
     }
@@ -78,7 +78,7 @@ class ItemPay extends Component {
     }
 
     render() {
-        const data = this.props.data ;
+        const data = this.props.data.dataObject ;
         const dateOderBill = new Date(data.time_pay.seconds * 1000);
         return (
              <View              style = {{
@@ -185,6 +185,7 @@ class Pay extends Component {
     super(props);
     this.selectItemPay = this.selectItemPay.bind(this);
     this.removeItemPay = this.removeItemPay.bind(this);
+    this.payBill = this.payBill.bind(this);
     this.state = {
         listPaid : []
     };
@@ -216,6 +217,10 @@ class Pay extends Component {
         listPaid : arrayCopy !== undefined && arrayCopy !== null ? arrayCopy : []
     },()=>{
     });
+  }
+
+  payBill(){
+    this.props.actionPay.payBill(this.state.listPaid);
   }
 
 
@@ -271,13 +276,14 @@ class Pay extends Component {
                                                             <TouchableOpacity   style = {{
                                                                                             height : 30,
                                                                                             width : '50%',
-                                                                                            marginVertical : 10,
+                                                                                            marginVertical : 15,
                                                                                             borderRadius : 50,
                                                                                             alignSelf : 'center',
                                                                                             justifyContent :'center',
                                                                                             alignItems : 'center',
                                                                                             backgroundColor : 'green'
                                                                                         }}
+                                                                                onPress = {this.payBill}
                                                             >
                                                                                 <Text_Custom    content = {'Thanh toán'}
                                                                                                 style = {{
