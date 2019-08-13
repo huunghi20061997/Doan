@@ -142,8 +142,8 @@ componentWillUnmount() {
                                                                                             this.setState({
                                                                                                             isLoading : false
                                                                                                         },()=>{
-                                                                                                            if(this.props.actionSubmit){
-                                                                                                                this.props.actionSubmit();
+                                                                                                            if(this.actionSubmit !== null){
+                                                                                                                this.actionSubmit();
                                                                                                             }
                                                                                                         });
                                                                                         }}

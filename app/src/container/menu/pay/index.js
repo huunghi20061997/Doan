@@ -38,8 +38,10 @@ class ItemPay extends Component {
         })
     }
 
+
+
     componentDidMount(){
-        Firebase.FirebaseGetItemPay(true,this.props.data.list_oder,)
+        Firebase.FirebaseGetItemPay(true,this.props.data.dataObject.list_oder,)
         .then((reponse)=>{
             if(!reponse.error){
                 let price_total = 0;
@@ -58,10 +60,8 @@ class ItemPay extends Component {
             })
         });
 
-        Firebase.FirebaseGetItemPay(false,[],this.props.data.id_shop)
+        Firebase.FirebaseGetItemPay(false,[],this.props.data.dataObject.id_shop)
         .then((reponse)=>{
-
-            console.log('>>>>> this is reponse shop',reponse);
             let nameShop = '';
             if(!reponse.error){
                 nameShop = reponse.data[0]._data.name ;
@@ -186,6 +186,7 @@ class Pay extends Component {
     this.selectItemPay = this.selectItemPay.bind(this);
     this.removeItemPay = this.removeItemPay.bind(this);
     this.payBill = this.payBill.bind(this);
+    this.listenerFocus = null;
     this.state = {
         listPaid : []
     };
@@ -193,7 +194,16 @@ class Pay extends Component {
 
   componentDidMount(){
       this.props.actionPay.getListProduct();
+      this.listenerFocus = this.props.navigation.addListener('didFocus',()=>{
+        this.props.actionPay.getListProduct();
+      })
   }
+
+  componentWillUnmount(){
+    this.listenerFocus.remove();
+  }
+
+
 
   selectItemPay(idBill){
     let index = this.state.listPaid.findIndex((value) => value === idBill);

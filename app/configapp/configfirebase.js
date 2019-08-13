@@ -335,6 +335,52 @@ export const FirebaseGetListPay = (idUser) => {
         })
 }
 
+//***Funtion get list History via User */
+export const FirebaseGetListHistory = (idUser) => {
+  return new Promise ((resolve,reject)=>{
+    firebaseData.collection(constants.BILL_ODER)
+    .where('ID_User','==',Number(idUser))
+    .get()
+    .then((reponse)=>{
+      if(reponse.hasOwnProperty('_docs')){
+        let dataReceiver = [];
+          let total_price = 0 ; 
+          reponse._docs.forEach(DocumentSnapshot => {
+            dataReceiver.push({
+              dataObject  : DocumentSnapshot._data,
+              dataPath    : DocumentSnapshot._ref._documentPath._parts[1]
+            });
+          });
+          resolve ({
+                      data : dataReceiver,
+                      error : false,
+                      description : '',
+                  });
+      }else{
+        reject({
+                  data : [],
+                  error : true,
+                  description : constants.DESCRIPTION_ERROR_SYSTEM
+              });
+      }
+    })
+    .catch((error)=>{
+            reject({
+                      data : [],
+                      error : true,
+                      description : constants.DESCRIPTION_ERROR_SYSTEM
+                  });
+          })
+  })
+  .catch((error)=>{
+          reject({
+                    data : [],
+                    error : true,
+                    description : constants.DESCRIPTION_ERROR_SYSTEM
+                });
+        })
+}
+
 //***Funtion get total price or name shop bill */
 export const FirebaseGetItemPay = (isPrice = true,ArrayProduct  = [],id) => {
   return new Promise ((resolve,reject)=>{

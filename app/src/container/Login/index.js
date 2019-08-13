@@ -48,6 +48,7 @@ class Login extends Component {
     if(this.props.authenReducer.isAuthenSuccess !== prevProps.authenReducer.isAuthenSuccess){
       if(this.props.authenReducer.isAuthenSuccess){
         this.props.navigation.navigate('DrawerApp');
+        this.props.actionAuthen.resetAuthen();
       }
     }
   }
@@ -136,16 +137,17 @@ class Login extends Component {
                                           />
                                     </TouchableOpacity>
 
-                                    <View style = {{
-                                                        marginTop : constants.MARGIN_DEFAULT_APP * 2
-                                                  }}
+                                    <TouchableOpacity style = {{
+                                                                 marginTop : constants.MARGIN_DEFAULT_APP * 2
+                                                              }}
+                                                      onPress = {()=>{this.props.navigation.navigate('Register')}}
                                     >
                                           <Text_Custom  content = {'Đăng kí'}
                                                         style = {{
                                                                     fontSize:  15,
                                                                 }}
                                           />
-                                    </View>
+                                    </TouchableOpacity>
                     
                     
                     </SafeAreaView>

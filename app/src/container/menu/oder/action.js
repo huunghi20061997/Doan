@@ -114,8 +114,11 @@ export const oder_product = (id_Shop, id_Table) => {
         showBlockUI();
         
         /**check table and shop is exist*/
+
+        console.log('>>>>>. this is shop && table',id_Shop,id_Table)
         Firebase.FirebaseCheckOrder(id_Table,id_Shop)
         .then((reponse)=>{
+            console.log('>>>>>. this is reponse',reponse)
             const data = reponse.data.length > 0 ? reponse.data[0]._data : null ; 
             if(data !== null && data.id_shop == id_Shop && data.id_table == id_Table){
                     // Start Order

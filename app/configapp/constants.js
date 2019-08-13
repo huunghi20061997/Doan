@@ -9,6 +9,8 @@ export const AUTHEN_ERROR           =   'AUTHEN_ERROR';
 export const START_LOGIN_USER       =   'START_LOGIN_USER';
 export const LOGIN_SUCCESS          =   'LOGIN_SUCCESS';
 export const LOGIN_ERROR            =   'LOGIN_ERROR';
+export const RESET_AUTHEN           =   'RESET_AUTHEN';
+
 
 export const TOKEN_AUTHEN           = 'USER_AUTHEN';
 
@@ -44,6 +46,15 @@ export const UPDATE_LIST_PAY                = 'UPDATE_LIST_PAY';
 export const START_PAID_PRODUCT             = 'START_PAID_PRODUCT';
 export const PAID_PRODUCT_SUCCESS           = 'PAID_PRODUCT_SUCCESS';
 export const PAID_PRODUCT_ERROR             = 'PAID_PRODUCT_ERROR';
+
+//**                    End                                                */
+
+//***                           Const Reducer History                    */
+
+export const START_GET_LIST_HISTORY                 = 'START_GET_LIST_HISTORY';
+export const GET_LIST_HISTORY_SUCCESS               = 'GET_LIST_HISTORY_SUCCESS';
+export const GET_LIST_HISTORY_ERROR                 = 'GET_LIST_HISTORY_ERROR';
+
 
 //**                    End                                                */
 

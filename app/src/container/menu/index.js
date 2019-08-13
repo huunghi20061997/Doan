@@ -86,7 +86,10 @@ export default class MenuApp extends Component {
                             />
                     </TouchableOpacity>
 
-                    <View   style = {styles.item}
+                    <TouchableOpacity   style = {styles.item}
+                                        onPress = {()=>{
+                                            this.props.navigation.navigate('History');
+                                        }}
                     >
                             <ImageBackground    style = {styles.styleImage}
                                                 source = {require('../../../resource/image/history.png')}
@@ -98,7 +101,7 @@ export default class MenuApp extends Component {
                                                         fontSize: 15,
                                                     }}
                             />
-                    </View>
+                    </TouchableOpacity>
             </View>
             
             <View   style = {{  

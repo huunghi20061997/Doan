@@ -23,6 +23,12 @@ export const actionLoginError = (error) => {
     }
 }
 
+export const resetAuthen = () =>{
+    return {
+        type : constants.RESET_AUTHEN,
+    }
+}
+
 export const actionLoginUser = (user,password) =>{
     return  (dispath,getstate) => {
         dispath(actionStartLogin());

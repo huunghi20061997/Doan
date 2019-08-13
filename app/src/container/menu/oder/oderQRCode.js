@@ -13,6 +13,7 @@ import {RNCamera} from 'react-native-camera';
 class OderQRCode extends Component {
   constructor(props) {
     super(props);
+    this.submitOrderQR = this.submitOrderQR.bind(this);
     this.state = {
       focusedScreen : false,
       
@@ -20,24 +21,24 @@ class OderQRCode extends Component {
     this.loadingOrder = false ; 
   }
 
+  submitOrderQR(){
+    this.loadingOrder = false;
+  }
+
   readDataQRCamera = (Data) => {
+    if(this.loadingOrder === true) return;
     Vibration.vibrate();
-    if(this.loadingOrder == true) return;
-    hideBlockUI();
+    showBlockUI();
     this.loadingOrder = true ;
     let objectData = {};
-    if(Data.hasOwnProperty('barcodes')){
-          if(Data.barcodes.length > 0){
-            const objectData = JSON.parse(Data.barcodes[0].data);
-            this.props.actionOder.add_product_oder(objectData);
-            hideBlockUI(constants.RESULT_BLOCK_SUCCESS,'Đặt món thành công');
-          }else{
-            hideBlockUI(constants.RESULT_BLOCK_SUCCESS,'Đặt món thất bại');
-          }
+    if(Data.hasOwnProperty('data')){
+          //const objectData = JSON.parse(Data.barcodes[0].data);
+          objectData =JSON.parse(Data.data);
+          this.props.actionOder.add_product_oder(objectData);
+          hideBlockUI(constants.RESULT_BLOCK_SUCCESS,'Đặt món thành công',true,this.submitOrderQR);
       }else{
-        hideBlockUI(constants.RESULT_BLOCK_SUCCESS,'Đặt món thất bại');
+        hideBlockUI(constants.RESULT_BLOCK_SUCCESS,'Đặt món thất bại',true,this.submitOrderQR);
       }
-    this.loadingOrder = false ;
 }
 
   componentDidMount(){
@@ -60,19 +61,28 @@ class OderQRCode extends Component {
       >
                 <View style = {{
                                   flex : 0.7,
+                                  padding : 40
                               }}
                 >
                       {
                       this.state.focusedScreen ?
-                          <RNCamera style = {{
-                                                flex : 1,
-                                            }}
-                                    isRepeatScan={true}
-                                    autoFocus={RNCamera.Constants.AutoFocus.on}
-                                    autoFocusPointOfInterest= {{x:0.5,y:0.5}}
-                                    whiteBalance = {RNCamera.Constants.WhiteBalance.auto}
-                                    onGoogleVisionBarcodesDetected = {this.readDataQRCamera}
-                          />
+                        <View style = {{
+                                          flex : 1,
+                                          borderRadius : 6,
+                                          overflow : 'hidden'
+                                      }}
+                        >
+                            <RNCamera style = {{
+                                                  flex : 1,
+                                              }}
+                                      isRepeatScan={true}
+                                      autoFocus={RNCamera.Constants.AutoFocus.on}
+                                      autoFocusPointOfInterest= {{x:0.5,y:0.5}}
+                                      whiteBalance = {RNCamera.Constants.WhiteBalance.auto}
+                                      onBarCodeRead = {this.readDataQRCamera}
+                                      //onGoogleVisionBarcodesDetected = {this.readDataQRCamera}
+                            />
+                        </View>
                       :
                           <View style = {styles.waitTurnOnCamera}
                               >

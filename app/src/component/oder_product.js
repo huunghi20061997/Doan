@@ -36,14 +36,16 @@ class OderProduct extends Component {
         priceTotal += (currentItem.price * currentItem.number) ;
       }); 
     }
-    return priceTotal; 
+    return priceTotal;
   }
 
   
 
   checkOrder(){
     if(this.props.OderQR){
-      return true ; 
+      if(this.props.isReducerOder.isListOder.length > 0) return true ;
+      else return false ; 
+
     }else{
       if(this.state.id_shop.length >= constants.LENGHT_ID_DEFAULT && this.state.id_table.length > 0)
         return true ;
@@ -57,10 +59,20 @@ class OderProduct extends Component {
     });
   }
 
+  componentDidUpdate(prevProps,prevSate){
+  }
+
   submitOder(){
     const {id_shop,id_table} = this.state;
-    const numberIdShop = Number(id_shop);
-    const numberIdTable = Number(id_table);
+    let numberIdShop = 0;
+    let numberIdTable = 0;
+    if(this.props.OderQR){
+      numberIdShop  = this.props.isReducerOder.isListOder[0].id_shop;
+      numberIdTable = this.props.isReducerOder.isListOder[0].id_table;
+    }else{
+      numberIdShop = Number(id_shop);
+      numberIdTable = Number(id_table);
+    }
     this.props.actionOder.oder_product(numberIdShop,numberIdTable);
   }
 

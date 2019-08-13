@@ -41,6 +41,16 @@ const authenReducer = function (state = initStateAuthen, action){
                 isAuthenDescription: action.Description,
             };
             break;
+
+        case "RESET_AUTHEN":
+            return {
+                ...state,
+                isAuthenFetching: false,
+                isAuthenSuccess: false,
+                isAuthenError : false,
+                isAuthenDescription: '',
+            };
+            break;
         default : return state ; break ; 
     }
 }

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text,SafeAreaView,TouchableOpacity,Platform,StyleSheet } from 'react-native';
+import { View, Text,SafeAreaView,TouchableOpacity,Platform,StyleSheet,Na } from 'react-native';
 import * as constants from '../../../../configapp/constants';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {Button} from 'native-base';
 import Text_Custom from '../../../component/text_custom';
 import wifi from 'react-native-android-wifi';
 import {showBlockUI,hideBlockUI} from '../../../component/block-ui';
+import {WifiManager} from 'react-native-wifi';
 import {RNCamera} from 'react-native-camera';
+import Wifi from "react-native-iot-wifi";
 
 
 
@@ -17,7 +19,8 @@ export default class LoginWifi extends Component {
     super(props);
     this.numberLogin = 0; 
     this.state = {
-      focusedScreen : false
+      focusedScreen : false,
+      readingData : false
     };
     this.loginWifi = this.loginWifi.bind(this);
   }
@@ -25,8 +28,9 @@ export default class LoginWifi extends Component {
   loginWifi(name,password){
     if(Platform.OS == 'android'){
           this.numberLogin += 1 ; 
-          wifi.findAndConnect('Anhduy','Hoicaigi', (found) => {
+          wifi.findAndConnect(name,password, (found) => {
             if (found) {
+              this.setState({readingData : false});
               hideBlockUI(constants.RESULT_BLOCK_SUCCESS,'Đăng nhập wifi thành công');
               this.props.navigation.goBack();
             } else {
@@ -35,31 +39,40 @@ export default class LoginWifi extends Component {
                   this.loginWifi(name,password);
                 },1000);
               }else{
+                this.setState({readingData : false});
                 hideBlockUI(constants.RESULT_BLOCK_ERROR,'Đăng nhập wifi thất bại');
                 this.props.navigation.goBack();
               }
             }
         });
-      }
+    }else{
+    }
 }
 
   readDataQR = (Data) => {
+    if(this.state.readingData) return ; 
+    this.setState({readingData : true});
     let objectData = {};
     if(Data.hasOwnProperty('data')){
       objectData = JSON.parse(Data.data);
     }
     showBlockUI();
-    if(objectData.hasOwnProperty('name') && objectData.hasOwnProperty('password')){
-      wifi.isEnabled((isEnabled)=>{
-        if(!isEnabled) {
-          hideBlockUI(constants.RESULT_BLOCK_ERROR,'Vui lòng bật wifi',true);
-          this.props.navigation.goBack();
+    if(Platform.OS == 'android'){
+        if(objectData.hasOwnProperty('name') && objectData.hasOwnProperty('password')){
+          wifi.isEnabled((isEnabled)=>{
+            if(!isEnabled) {
+              this.setState({readingData : false});
+              hideBlockUI(constants.RESULT_BLOCK_ERROR,'Vui lòng bật wifi',true);
+              this.props.navigation.goBack();
+            }
+            else {
+              this.loginWifi(objectData.name,objectData.password);
+            }
+        })
         }
-        else {
-          this.loginWifi(objectData.name,objectData.password);
-        }
-    })
-  }
+    }else{
+      this.loginWifi(objectData.name,objectData.password);
+    }
 }
 
   componentDidMount(){
@@ -70,6 +83,9 @@ export default class LoginWifi extends Component {
     navigation.addListener('willBlur', () =>
                                               this.setState({ focusedScreen: false })
                           );
+                          Wifi.connect("wifi-name", (error) => {
+                            console.log(error ? 'error: ' + error : 'connected to wifi-name');
+                          });
   }
 
   render() {
@@ -78,36 +94,31 @@ export default class LoginWifi extends Component {
                                 flex : 1,
                             }}
       >
-                    {/* <View  style = {{
-                                      height : 100,
-                                      width : '100%',
-                                      justifyContent : 'center',
-                                      alignItems : 'center'
-                                  }}
-                    >
-                            <Text_Custom  content = {'Đăng nhập wifi QRCODE'}
-                                          style = {{
-                                                      color : constants.GRAY_COLOR,
-                                                      fontWeight : 'bold',
-                                                      fontSize: 20,
-                                                  }}
-                            />
-                    </View> */}
                     <View style = {{
                                       flex : 0.7,
+                                      padding : 40,
                                   }}
                     >
                     {
                       this.state.focusedScreen ?
-                          <RNCamera style = {{
-                                                flex : 1,
-                                            }}
-                                    isRepeatScan={true}
-                                    autoFocus={RNCamera.Constants.AutoFocus.on}
-                                    autoFocusPointOfInterest= {{x:0.5,y:0.5}}
-                                    whiteBalance = {RNCamera.Constants.WhiteBalance.auto}
-                                    onGoogleVisionBarcodesDetected = {this.readDataQR}
-                          />
+                          <View style = {{
+                                            flex : 1,
+                                            borderRadius : 6,
+                                            overflow : 'hidden'
+                                        }}
+                          >
+                              <RNCamera style = {{
+                                                    flex : 1,
+                                                }}
+                                        
+                                        isRepeatScan={true}
+                                        autoFocus={RNCamera.Constants.AutoFocus.on}
+                                        autoFocusPointOfInterest= {{x:0.5,y:0.5}}
+                                        whiteBalance = {RNCamera.Constants.WhiteBalance.auto}
+                                        onBarCodeRead = {this.readDataQR}
+                                        captureAudio = {false}
+                              />
+                          </View>
                       : 
                           <View style = {styles.waitTurnOnCamera}
                           >
