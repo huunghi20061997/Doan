@@ -110,7 +110,10 @@ export default class MenuApp extends Component {
                                 flexDirection : 'row',
                             }}
             >
-                    <View    style = {styles.item}
+                    <TouchableOpacity       style = {styles.item}
+                                            onPress = {()=>{
+                                                this.props.navigation.navigate('Promotion');
+                                            }}
                     >
                             <ImageBackground    style = {styles.styleImage}
                                                 source = {require('../../../resource/image/promotion.png')}
@@ -122,9 +125,12 @@ export default class MenuApp extends Component {
                                                         fontSize: 15,
                                                     }}
                             />
-                    </View>
+                    </TouchableOpacity>
 
-                    <View   style = {styles.item}
+                    <TouchableOpacity   style = {styles.item}
+                                        onPress = {()=>{
+                                            this.props.navigation.navigate('Search');
+                                        }}
                     >
                             <ImageBackground    style = {styles.styleImage}
                                                 source = {require('../../../resource/image/address.png')}
@@ -136,7 +142,7 @@ export default class MenuApp extends Component {
                                                         fontSize: 15,
                                                     }}
                             />
-                    </View>
+                    </TouchableOpacity>
             </View>
       </View>
     );

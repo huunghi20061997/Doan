@@ -50,13 +50,24 @@ export const PAID_PRODUCT_ERROR             = 'PAID_PRODUCT_ERROR';
 //**                    End                                                */
 
 //***                           Const Reducer History                    */
-
 export const START_GET_LIST_HISTORY                 = 'START_GET_LIST_HISTORY';
 export const GET_LIST_HISTORY_SUCCESS               = 'GET_LIST_HISTORY_SUCCESS';
 export const GET_LIST_HISTORY_ERROR                 = 'GET_LIST_HISTORY_ERROR';
-
-
 //**                    End                                                */
+
+//***                           Const Reducer History                                       */
+export const START_GET_LIST_PROMOTION                       = 'START_GET_LIST_PROMOTION';
+export const GET_LIST_PROMOTION_SUCCESS                     = 'GET_LIST_PROMOTION_SUCCESS';
+export const GET_LIST_PROMOTION_ERROR                       = 'GET_LIST_PROMOTION_ERROR';
+//**                                    End                                                */
+
+
+//***                           Const Reducer Search                                       */
+export const START_GET_LIST_SHOP                       = 'START_GET_LIST_SHOP';
+export const GET_LIST_SHOP_SUCCESS                     = 'GET_LIST_SHOP_SUCCESS';
+export const GET_LIST_SHOP_ERROR                       = 'GET_LIST_SHOP_ERROR';
+//**                                    End                                                */
+
 
 
 //**            constants for color App                                     */
@@ -125,6 +136,10 @@ export const FINISHED                       =           'Hoàn thành';
 export const NOT_GET_TOTAL_PRICE            =           'Không lấy được tổng tiền';
 export const NOT_GET_DATA                   =           'Không lấy được dữ liệu';
 export const ERROR_UPDATE                   =           'Lỗi không thể cập nhật';
+export const ERROR_GET_LIST_PROVINCE        =           'Đã có lỗi';
+export const ERROR_GET_LIST_DISTRICT        =           'Đã có lỗi';
+
+
 
 
 
@@ -148,6 +163,12 @@ export const TABLE                              =           {
                                                             };
 export const BILL_ODER                          =           'bill_oder';
 export const AUTHEN                             =           'Authen'; 
+export const PROMOTION                          =           'promotion';
+export const SHOP_PROMOTION                     =           'shop_promotion';
+export const PROVINCE                           =           'province';
+export const DISTRICT                           =           'district';
+
+
 
 //**                    End                                                */
 

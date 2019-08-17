@@ -20,6 +20,8 @@ import OderList from '../src/container/menu/oder/oderList';
 import OderQRCode from '../src/container/menu/oder/oderQRCode';
 import Pay from '../src/container/menu/pay/index';
 import History from '../src/container/menu/history/index'
+import Promotion from '../src/container/menu/promotion/index';
+import Search from '../src/container/menu/search/index';
 
 const TabTopOderApp = createMaterialTopTabNavigator({
     OderList : {
@@ -53,6 +55,12 @@ const DrawerApp = createDrawerNavigator({
     },
     History : {
         screen : History
+    },
+    Promotion : {
+        screen : Promotion
+    },
+    Search : {
+        screen : Search
     }
 },{
         initialRouteName : 'Home',

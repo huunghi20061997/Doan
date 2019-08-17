@@ -133,7 +133,7 @@ export default class LoginWifi extends Component {
                                       flexDirection : 'row',
                                   }}
                     >
-                          <View style = {{
+                          {/* <View style = {{
                                             flex : 0.5,
                                             justifyContent : 'center',
                                             alignItems : 'center'
@@ -168,7 +168,7 @@ export default class LoginWifi extends Component {
                                 >
                                         <Text_Custom  content = {'Sao chép'}/>
                                 </TouchableOpacity>
-                          </View>
+                          </View> */}
 
                     </View>
                     

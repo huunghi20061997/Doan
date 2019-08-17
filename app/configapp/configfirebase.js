@@ -471,7 +471,6 @@ export const FirebasePayBill = (listPay) => {
 
                     }
   
-  console.log('this is listbill',listPay);
   return new Promise ((resolve,reject)=>{
       let arrayPromise = [];
       listPay.forEach((value)=>{
@@ -509,4 +508,135 @@ export const FirebasePayBill = (listPay) => {
       })
   })
 }
+
+
+//***Funtion get list Promotion */
+export const FirebaseGetListPromotion = () => {
+  return new Promise ((resolve,reject)=>{
+    firebaseData.collection(constants.PROMOTION)
+    .get()
+    .then((reponse)=>{
+      if(reponse.hasOwnProperty('_docs')){
+        let dataReceiver = [];
+        // let arrayPromise = [];
+        reponse._docs.forEach(DocumentSnapshot => {
+          dataReceiver.push(DocumentSnapshot._data);
+        });
+                resolve ({
+                            data : dataReceiver,
+                            error : false,
+                            description : '',
+                        });
+      }else {
+                reject({
+                          data : [],
+                          error : true,
+                          description : constants.DESCRIPTION_ERROR_SYSTEM
+                      });
+            }
+    })
+    .catch((error)=>{
+                reject({
+                          data : [],
+                          error : true,
+                          description : constants.DESCRIPTION_ERROR_SYSTEM
+                      });
+    })
+})
+}
+
+//***Funtion get Address Shop via id Promotion */
+export const FirebaseGetShopViaPromotion = (idPromotion) => {
+  return new Promise ((resolve,reject)=>{
+    firebaseData.collection(constants.SHOP_PROMOTION)
+    .where('id_pro','==',idPromotion)
+    .get()
+    .then((reponse)=>{
+      const id_Shop =  reponse._docs[0]._data.id_shop;
+      return FirebaseGetItemPay(false,[],id_Shop)
+    })
+    .then((reponse)=>{
+      const data = reponse.data[0]._data;
+      resolve(data);
+    })
+    .catch((error)=>{
+      reject({
+                data : [],
+                error : true,
+                description : constants.DESCRIPTION_ERROR_SYSTEM
+            });
+    })
+  })
+}
+
+//***Funtion get Provice*/
+export const FirebaseGetProvince = () =>{
+  return new Promise ((resolve,reject)=>{
+    firebaseData.collection(constants.PROVINCE)
+    .get()
+    .then((reponse)=>{
+      if(reponse.hasOwnProperty('_docs')){
+          let dataReceiver = [];
+          reponse._docs.forEach(DocumentSnapshot => {
+            dataReceiver.push(DocumentSnapshot._data);
+          });
+
+          resolve ({
+                    data : dataReceiver,
+                    error : false,
+                    description : '',
+                });
+      }else{
+        reject({
+                  data : [],
+                  error : true,
+                  description : constants.ERROR_GET_LIST_PROVINCE
+              });
+      }
+    })
+    .catch((reponse)=>{
+      reject({
+                data : [],
+                error : true,
+                description : constants.ERROR_GET_LIST_PROVINCE
+            });
+    })
+})
+}
+
+export const FirebaseGetDistrict = (id_province) =>{
+  return new Promise ((resolve,reject)=>{
+    firebaseData.collection(constants.DISTRICT)
+    .where('id_province','==',id_province)
+    .get()
+    .then((reponse)=>{
+      if(reponse.hasOwnProperty('_docs')){
+          let dataReceiver = [];
+          reponse._docs.forEach(DocumentSnapshot => {
+            dataReceiver.push(DocumentSnapshot._data);
+          });
+
+          resolve ({
+                    data : dataReceiver,
+                    error : false,
+                    description : '',
+                });
+      }else{
+        reject({
+                  data : [],
+                  error : true,
+                  description : constants.ERROR_GET_LIST_PROVINCE
+              });
+      }
+    })
+    .catch((reponse)=>{
+      reject({
+                data : [],
+                error : true,
+                description : constants.ERROR_GET_LIST_PROVINCE
+            });
+    })
+})
+}
+
 
