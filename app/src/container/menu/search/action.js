@@ -25,22 +25,22 @@ export const get_list_success = (data)=> {
     }
 }
 
-// // export const getListShopDistrict = () => {
-// //     return (dispath,getState)=>{
-// //         if(getState().isReducerGetListShop.isListShop) return ;
-// //         //showBlockUI();
-// //         dispath(start_list_product());
-// //         Firebase.FirebaseGetListPromotion()
-// //         .then((reponse)=>{
-// //             dispath(get_list_success(reponse.data));
-// //             hideBlockUI();
-// //         },(error)=>{
-// //             dispath(get_list_error(error.description))
-// //             hideBlockUI(constants.RESULT_BLOCK_ERROR,'Thất bại vui lòng thử lại');
-// //         })
-// //         .catch((error)=>{
-// //             dispath(get_list_error(error.description))
-// //             hideBlockUI(constants.RESULT_BLOCK_ERROR,'Thất bại vui lòng thử lại');
-// //         })
-// //     }
-// }
+export const getListShopDistrict = (id_District) => {
+    return (dispath,getState)=>{
+        if(getState().isReducerGetListShop.isGetingList) return ;
+        //showBlockUI();
+        dispath(start_list_product());
+        Firebase.FirebaseGetShopInDistrict(id_District)
+        .then((reponse)=>{
+            dispath(get_list_success(reponse.data));
+            hideBlockUI();
+        },(error)=>{
+            dispath(get_list_error(error.description))
+            hideBlockUI(constants.RESULT_BLOCK_ERROR,'Thất bại vui lòng thử lại');
+        })
+        .catch((error)=>{
+            dispath(get_list_error(error.description))
+            hideBlockUI(constants.RESULT_BLOCK_ERROR,'Thất bại vui lòng thử lại');
+        })
+    }
+}

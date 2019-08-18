@@ -24,7 +24,7 @@ class ItemProvinceDistrict extends Component {
                                             alignItems : 'center'
                                         }}
                                 onPress = {()=>{
-                                    this.props.selectItem(this.props.data.id_province);
+                                    this.props.selectItem(this.props.data);
                                 }}
             >
                     <Text_Custom    content = {this.props.data.name}
@@ -34,6 +34,47 @@ class ItemProvinceDistrict extends Component {
     }
 }
 
+
+class ItemShowAddressShop extends Component {
+  render() {
+    const dataAddress = this.props.data ;
+    console.log('>>>>. this is dataAddress',dataAddress )
+    return (
+      <View style = {{
+                        width : '100%',
+                        backgroundColor : 'white',
+                        borderRadius : 6,
+                        padding : 10,
+                    }}
+      >
+            <View   style = {{
+                                borderBottomColor : 'silver',
+                                borderBottomWidth : 0.5,
+                                paddingVertical : 10,
+                                justifyContent : 'center',
+                                alignItems : 'flex-start'
+                            }}
+            >
+                    <Text_Custom    content = {dataAddress.nameDistrict.name}
+                                    style = {{
+                                                fontWeight : 'bold',
+                                            }}
+                                    styleView = {{
+                                                    justifyContent : 'flex-start'
+                                                }}
+                    />
+            </View>
+
+            <Text_Custom    content = { 'Địa chỉ : ' + dataAddress.address}
+                                    styleView = {{
+                                                    justifyContent : 'flex-start',
+                                                    paddingVertical: 10,
+                                                }}
+            />
+      </View>
+    )
+  }
+}
 
 class Search extends Component {
   constructor(props) {
@@ -70,7 +111,7 @@ class Search extends Component {
   }
 
   getListDistrict(){
-    Firebase.FirebaseGetDistrict(this.state.selectItemProvince)
+    Firebase.FirebaseGetDistrict(this.state.selectItemProvince.id_province)
     .then((reponse)=>{
         this.setState({
             listDistrict : reponse.data
@@ -100,7 +141,7 @@ class Search extends Component {
   }
 
   getListShop(){
-
+    this.props.actionSearch.getListShopDistrict(this.state.selectItemDistrict.id_district);
   }
 
   componentDidMount(){
@@ -121,7 +162,7 @@ class Search extends Component {
   }
 
   render() {
-    console.log('>>>>>>>> this is data2',this.state.listDistrict)
+    const GetListShop = this.props.isReducerGetListShop ; 
     return (
       <View style = {{
                         flex : 1,
@@ -181,6 +222,7 @@ class Search extends Component {
                                                                             return  <ItemProvinceDistrict
                                                                                         data = {item}
                                                                                         selectItem = {this.selectItem}
+                                                                                        isDistrict = {this.state.currentSelect}
                                                                                     />
                                                                         }}
                                                                         data = {this.state.currentSelect ? this.state.listDistrict : this.state.listProvince}
@@ -230,6 +272,81 @@ class Search extends Component {
                             />
                     </TouchableOpacity>
             </View>
+                    {
+                            <SafeAreaView style =   {{
+                                                        flex : 1,
+                                                        backgroundColor : constants.BACKGROUND_BELOW_APP,
+                                                    }}
+                            >
+                                    {
+                                        GetListShop.isGetingList ?
+                                            <View   style = {{
+                                                                flex : 1,
+                                                                alignItems : 'center',
+                                                                justifyContent : 'center'
+                                                            }}
+                                            >
+                                                    <Text_Custom    content = {'Đang tải dữ liệu'} />
+                                            </View>
+                                        :
+                                            GetListShop.isGetListSuccess ?
+                                                <View   style = {{
+                                                                    flex : 1,
+                                                                    alignItems : 'center',
+                                                                    justifyContent : 'center',
+                                                                }}
+                                                >       
+                                                        {
+                                                                GetListShop.isListShop.length == 0 ?
+                                                                    <Text_Custom    content = {'Không có cửa hàng trong khu vực này'}/>
+                                                                :
+                                                                    <View   style = {{
+                                                                                        flex : 1,
+                                                                                        width : '100%'
+                                                                                    }}
+                                                                    >
+                                                                            <FlatList   style = {{
+                                                                                                    flex : 1,
+                                                                                                    width : '100%',
+                                                                                                    padding : 10,
+                                                                                                }}
+                                                                                        data = {GetListShop.isListShop}
+                                                                                        renderItem = {({item,index})=> {
+                                                                                            const dataShop =    {
+                                                                                                                    ...item,
+                                                                                                                    nameDistrict : this.state.selectItemDistrict
+                                                                                                                }
+                                                                                            return  <ItemShowAddressShop
+                                                                                                            data = {dataShop}
+                                                                                                    />
+                                                                                        }}
+                                                                            />
+                                                                    </View>
+                                                        }
+                                                </View>
+                                            :
+                                                GetListShop.isGetListError ?
+                                                    <View   style = {{
+                                                                        flex : 1,
+                                                                        alignItems : 'center',
+                                                                        justifyContent : 'center'
+                                                                    }}
+                                                    >
+                                                            <Text_Custom    content = {'Vui lòng thử lại'}/>
+                                                    </View>
+                                                :
+                                                    <View   style = {{
+                                                                        flex : 1,
+                                                                        justifyContent : 'center',
+                                                                        alignItems : 'center'
+                                                                    }}
+                                                    >
+                                                            <Text_Custom    content = {'Vui lòng chọn khu vực'}
+                                                            />
+                                                    </View>
+                                    }
+                            </SafeAreaView>
+                    }
       </View>
     );
   }

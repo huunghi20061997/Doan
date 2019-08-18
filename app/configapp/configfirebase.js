@@ -604,6 +604,8 @@ export const FirebaseGetProvince = () =>{
 })
 }
 
+
+//***Funtion get District*/
 export const FirebaseGetDistrict = (id_province) =>{
   return new Promise ((resolve,reject)=>{
     firebaseData.collection(constants.DISTRICT)
@@ -638,5 +640,43 @@ export const FirebaseGetDistrict = (id_province) =>{
     })
 })
 }
+
+//***Funtion get Shop in area*/
+export const FirebaseGetShopInDistrict = (id_district) =>{
+  return new Promise ((resolve,reject)=>{
+    firebaseData.collection(constants.SHOP.NAME)
+    .where('id_district','==',id_district)
+    .get()
+    .then((reponse)=>{
+          if(reponse.hasOwnProperty('_docs')){
+            console.log('>>>>>>>> this is data',reponse)
+            let dataReceiver = [];
+            reponse._docs.forEach(DocumentSnapshot => {
+              dataReceiver.push(DocumentSnapshot._data);
+            });
+
+            resolve ({
+                      data : dataReceiver,
+                      error : false,
+                      description : '',
+                  });
+        }else{
+          reject({
+                    data : [],
+                    error : true,
+                    description : constants.DESCRIPTION_ERROR_SYSTEM
+                });
+        }
+    })
+    .catch((error)=>{
+                    reject({
+                              data : [],
+                              error : true,
+                              description : constants.DESCRIPTION_ERROR_SYSTEM
+                          });
+    })
+  })
+}
+
 
 

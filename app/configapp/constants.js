@@ -155,7 +155,8 @@ export const LENGHT_ID_DEFAULT              = 4;
 export const MENU_PRODUCT                       =           'menu_product';
 export const SHOP                               =           {
                                                                 ID_SHOP : 'id_shop',
-                                                                TABLE_SHOP : 'shop'
+                                                                TABLE_SHOP : 'shop',
+                                                                NAME : 'shop',
                                                             };
 export const TABLE                              =           {
                                                                 TABLE_ODER : 'table_oder',
@@ -167,6 +168,7 @@ export const PROMOTION                          =           'promotion';
 export const SHOP_PROMOTION                     =           'shop_promotion';
 export const PROVINCE                           =           'province';
 export const DISTRICT                           =           'district';
+
 
 
 
