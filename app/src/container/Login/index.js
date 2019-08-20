@@ -48,7 +48,7 @@ class Login extends Component {
     if(this.props.authenReducer.isAuthenSuccess !== prevProps.authenReducer.isAuthenSuccess){
       if(this.props.authenReducer.isAuthenSuccess){
         this.props.navigation.navigate('DrawerApp');
-        this.props.actionAuthen.resetAuthen();
+        //this.props.actionAuthen.resetAuthen();
       }
     }
   }

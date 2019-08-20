@@ -21,6 +21,17 @@ const authenReducer = function (state = initStateAuthen, action){
                 isAuthenDescription: '',
             };
             break;
+
+        case 'AUTHEN_SUCCESS' :
+            return {
+                ...state,
+                isAuthenFetching: false,
+                isAuthenSuccess: true,
+                isAuthenError : false,
+                isAuthenDescription: '',
+            };
+            break;
+    
         
         case "START_AUTHENING_USER": 
             return {

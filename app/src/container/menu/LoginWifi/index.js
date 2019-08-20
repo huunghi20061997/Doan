@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text,SafeAreaView,TouchableOpacity,Platform,StyleSheet,Na } from 'react-native';
+import { View, Text,SafeAreaView,TouchableOpacity,Platform,StyleSheet,Clipboard } from 'react-native';
 import * as constants from '../../../../configapp/constants';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {Button} from 'native-base';
@@ -9,6 +9,7 @@ import {showBlockUI,hideBlockUI} from '../../../component/block-ui';
 import {WifiManager} from 'react-native-wifi';
 import {RNCamera} from 'react-native-camera';
 import Wifi from "react-native-iot-wifi";
+import OpenSettings from 'react-native-open-settings';
 
 
 
@@ -20,7 +21,9 @@ export default class LoginWifi extends Component {
     this.numberLogin = 0; 
     this.state = {
       focusedScreen : false,
-      readingData : false
+      readingData : false,
+      nameWifi_IOS : '',
+      passwordWifi_IOS : '',
     };
     this.loginWifi = this.loginWifi.bind(this);
   }
@@ -46,6 +49,10 @@ export default class LoginWifi extends Component {
             }
         });
     }else{
+      this.setState({
+        nameWifi_IOS : name,
+        passwordWifi_IOS : password,
+      })
     }
 }
 
@@ -56,23 +63,21 @@ export default class LoginWifi extends Component {
     if(Data.hasOwnProperty('data')){
       objectData = JSON.parse(Data.data);
     }
-    showBlockUI();
-    if(Platform.OS == 'android'){
         if(objectData.hasOwnProperty('name') && objectData.hasOwnProperty('password')){
-          wifi.isEnabled((isEnabled)=>{
-            if(!isEnabled) {
-              this.setState({readingData : false});
-              hideBlockUI(constants.RESULT_BLOCK_ERROR,'Vui lòng bật wifi',true);
-              this.props.navigation.goBack();
-            }
-            else {
-              this.loginWifi(objectData.name,objectData.password);
-            }
-        })
+          if(Platform.OS == 'android'){
+              wifi.isEnabled((isEnabled)=>{
+                if(!isEnabled) {
+                  this.setState({readingData : false});
+                  hideBlockUI(constants.RESULT_BLOCK_ERROR,'Vui lòng bật wifi',true);
+                  this.props.navigation.goBack();
+                }else {
+                  this.loginWifi(objectData.name,objectData.password);
+                }
+            });
+          }else{
+                  this.loginWifi(objectData.name,objectData.password);
+                }
         }
-    }else{
-      this.loginWifi(objectData.name,objectData.password);
-    }
 }
 
   componentDidMount(){
@@ -128,36 +133,32 @@ export default class LoginWifi extends Component {
                     }
                     </View>
 
+                    {
+                    Platform.OS === 'ios' ? 
                     <View style = {{
                                       flex : 0.3,
-                                      flexDirection : 'row',
+                                      //flexDirection : 'row',
                                   }}
                     >
-                          {/* <View style = {{
-                                            flex : 0.5,
-                                            justifyContent : 'center',
-                                            alignItems : 'center'
-                                        }}
-                          >
-                                <TouchableOpacity style = {{
-                                                              height : 50,
-                                                              width : '80%',
-                                                              borderRadius : constants.BODERADIUS_APP,
-                                                              backgroundColor : constants.BACKGROUND_ITEM_APP,
-                                                              alignSelf : 'center',
-                                                          }}
-                                >
-                                        <Text_Custom  content = {'Sao chép'}/>
-                                </TouchableOpacity>
-                          </View>
-                          
-
                           <View style = {{
                                             flex : 0.5,
                                             justifyContent : 'center',
                                             alignItems : 'center'
                                         }}
                           >
+                                <Text_Custom  content = {'Tên wifi : ' + this.state.nameWifi_IOS}
+                                />
+                                <Text_Custom  content = {'Mật khẩu : ' + this.state.passwordWifi_IOS}
+                                />
+                          </View>
+                          {
+                          this.state.passwordWifi_IOS.length > 0 ?
+                            <View style = {{
+                                            flex : 0.5,
+                                            justifyContent : 'center',
+                                            alignItems : 'center'
+                                        }}
+                          >
                                 <TouchableOpacity style = {{
                                                               height : 50,
                                                               width : '80%',
@@ -165,13 +166,25 @@ export default class LoginWifi extends Component {
                                                               backgroundColor : constants.BACKGROUND_ITEM_APP,
                                                               alignSelf : 'center',
                                                           }}
+                                                  onPress = {()=>{
+                                                    Clipboard.setString(this.state.passwordWifi_IOS);
+                                                    OpenSettings.openSettings();
+                                                  }}
+                                                  disabled = {this.state.passwordWifi_IOS.length == 0 ? true : false}
                                 >
-                                        <Text_Custom  content = {'Sao chép'}/>
+                                        <Text_Custom  content = {'Sao chép và đến cài đặt'}/>
                                 </TouchableOpacity>
-                          </View> */}
-
+                          </View>
+                          :
+                            <View style={{flex : 0.5}}/>
+                          }
                     </View>
-                    
+                    :
+                    <View style = {{
+                                      flex : 0.3
+                                  }}
+                    />
+                  }
       </SafeAreaView>
     );
   }

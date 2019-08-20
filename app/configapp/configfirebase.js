@@ -43,8 +43,9 @@ export const FirebaseGetDataUser = (user,password) => {
   return new Promise((resolve,reject)=>{
     const firebaseData = FirebaseConfig.firestore();
     firebaseData.settings({timestampsInSnapshots : true});
-    firebaseData.collection('Authen').where('NB_Phone','==',Number(user)).
-    where('Password' , '==' , password).get()
+    firebaseData.collection('Authen')
+    .where('NB_Phone','==',user)
+    .where('Password' , '==' , password).get()
     .then((reponse)=>{
         resolve ({
                     ...OBJECT_AUTHEN,

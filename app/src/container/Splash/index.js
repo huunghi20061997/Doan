@@ -15,6 +15,25 @@ class Splash extends Component {
 
     componentDidMount(){
         this.props.actionAuthen.actionAuthen();
+
+    }
+
+    componentDidUpdate(prevProps,prevSate){
+        if  (
+                (this.props.authenReducer.isAuthenSuccess !== prevProps.authenReducer.isAuthenSuccess)
+            ){
+                if(this.props.authenReducer.isAuthenSuccess)
+                this.props.navigation.navigate('DrawerApp');
+                else this.props.navigation.navigate('Login');
+            }
+
+        if  (
+                this.props.authenReducer.isAuthenError !== prevProps.authenReducer.isAuthenError
+            ){
+                if(this.props.authenReducer.isAuthenError)
+                this.props.navigation.navigate('Login');
+            }
+        
     }
 
 

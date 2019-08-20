@@ -3,6 +3,7 @@ package com.coffeemanagerapp;
 import android.app.Application;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import com.facebook.react.ReactApplication;
+import com.opensettings.OpenSettingsPackage;
 import com.devstepbcn.wifi.AndroidWifiPackage;
 import com.tadasr.IOTWifi.IOTWifiPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new OpenSettingsPackage(),
             new AndroidWifiPackage(),
             new IOTWifiPackage(),
             new VectorIconsPackage(),

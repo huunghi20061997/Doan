@@ -1,5 +1,6 @@
 import * as constants from '../../../configapp/constants';
-import {FirebaseConfig} from '../../../configapp/configfirebase';
+import {FirebaseConfig,FirebaseGetDataUser} from '../../../configapp/configfirebase';
+import {AsyncStorage} from 'react-native';
 
 export const actionStartAuthen = () => {
     return {
@@ -20,24 +21,34 @@ export const actionAuthenError = (error) => {
     }
 }
 
-export const actionAuthen = () => {
+export const actionAuthen = (navigation) => {
     return (dispath,getState) => {
         let checkFetching = getState().authenReducer.isAuthenFetching ; 
         if(checkFetching) return ; 
         dispath(actionStartAuthen());
-        return new Promise((resolve,reject)=>{
-            let  email = 'huunghi20061997@gmail.com';
-            let pass = 'Huunghi97';
-            FirebaseConfig.auth().signInWithEmailAndPassword(email, pass).then(()=>{
-                resolve()
-            }).catch((error)=>{
-                reject(error)
-            })
-        }).then(()=>{
-            dispath(actionAuthenSuccess())
-        }).catch((error)=>{
-            dispath(actionAuthenError('Đăng nhập thất bại'));
+        AsyncStorage.multiGet(['Phone','Password'])
+        .then((reponse)=>{
+            if(reponse !== null){
+                const numberPhone   = reponse[0][1];
+                const passWord      = reponse[1][1];
+                FirebaseGetDataUser(numberPhone,passWord)
+                .then((reponse)=>{
+                    if(reponse.success){
+                        const checkLogin = reponse.objectData.length > 0 ? true : false ;
+                        console.log('this is data',reponse.objectData)
+                        if(checkLogin) dispath(actionAuthenSuccess())
+                        else dispath(actionAuthenError('Chưa có tài khoản đăng nhập'))
+                    }
+                })
+                .catch((error)=>{
+                    dispath(actionAuthenError('Lỗi hệ thống'));
+                })
+            }else{
+                dispath(actionAuthenError('Lỗi hệ thống'));
+            }
         })
-        
+        .catch((error)=>{
+            dispath(actionAuthenError('Lỗi hệ thống'));
+        })
     }
 }

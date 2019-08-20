@@ -41,6 +41,7 @@
 		76CF209E841948128764CB18 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 751CA79BBD074437A5E7C8A8 /* MaterialCommunityIcons.ttf */; };
 		82A5EC070A2342B38A45A97C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E799174376E46A7B64DF2D5 /* Octicons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		840BFBB4A6A644C49CE8BF49 /* libReact Native Open Settings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D17EBA8F4A343CD86BC39FE /* libReact Native Open Settings.a */; };
 		8E00D42A040641DE8A31E1EB /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A727769262948058FB007D3 /* FontAwesome5_Brands.ttf */; };
 		9D4B3C0965F24353B4767D74 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19904466E02F4F099B85BBBD /* FontAwesome5_Regular.ttf */; };
 		A11391381F4E42598BF9BD64 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7607408420646A1AB6898EF /* MaterialIcons.ttf */; };
@@ -56,6 +57,7 @@
 		D03752D317284C5CB737FFCF /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A38115E9BE54B45B49569CB /* libRNGestureHandler.a */; };
 		E269FF2602304971A6D42326 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E059AF8194FA4E498027B2A0 /* AntDesign.ttf */; };
 		E30B443F22C1382900B6970E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E30B443E22C1382900B6970E /* GoogleService-Info.plist */; };
+		E31832A2230C4A7100971543 /* libReact Native Open Settings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E31832A1230C4A3F00971543 /* libReact Native Open Settings.a */; };
 		E31AA4E522D4E023007FAEF9 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E31AA4E122D4DFE7007FAEF9 /* libReactNativePermissions.a */; };
 		E3A852D82301D2AB00AE89C0 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A852D32301D29300AE89C0 /* libRNCamera.a */; };
 		E3B19A4F23030A920051952A /* libRNWifi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E36CFB5922D8C78F00C77BCE /* libRNWifi.a */; };
@@ -307,6 +309,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNFirebase;
 		};
+		E31832A0230C4A3F00971543 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 410FA0E6360A406986339FEA /* React Native Open Settings.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 190C8BAA1BEAADCC00CD505E;
+			remoteInfo = "React Native Open Settings";
+		};
 		E31AA4E022D4DFE7007FAEF9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E31AA4B722D4DFE7007FAEF9 /* ReactNativePermissions.xcodeproj */;
@@ -410,6 +419,7 @@
 		31839B6EA34F4FB69DF0694D /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		38EABDF0B9D14DF4A5FEA524 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		3F6EED08990C4605987D8624 /* libIOTWifi.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libIOTWifi.a; sourceTree = "<group>"; };
+		410FA0E6360A406986339FEA /* React Native Open Settings.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = "React Native Open Settings.xcodeproj"; path = "../node_modules/react-native-open-settings/React Native Open Settings.xcodeproj"; sourceTree = "<group>"; };
 		4730FF61F051B140B265F4E8 /* Pods-CoffeeManagerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoffeeManagerApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoffeeManagerApp/Pods-CoffeeManagerApp.release.xcconfig"; sourceTree = "<group>"; };
 		4B73BDB93FF848EAA0DFDF59 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		507AF1B45B9D4AC88F79AF78 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
@@ -419,6 +429,7 @@
 		54D3EE7A6CBA4D57B398A8FF /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		660B7D45BCD74267B8D2C7B7 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		6D17EBA8F4A343CD86BC39FE /* libReact Native Open Settings.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libReact Native Open Settings.a"; sourceTree = "<group>"; };
 		6F514D9878C94DD793D3C6D4 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		751CA79BBD074437A5E7C8A8 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		77D4B5AA51B94E9F94043C87 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
@@ -469,6 +480,7 @@
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
+				E31832A2230C4A7100971543 /* libReact Native Open Settings.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
@@ -481,6 +493,7 @@
 				FCB2413388988344F52284DE /* libPods-CoffeeManagerApp.a in Frameworks */,
 				E3B19A7B23030B660051952A /* libIOTWifi.a in Frameworks */,
 				E3B19A4F23030A920051952A /* libRNWifi.a in Frameworks */,
+				840BFBB4A6A644C49CE8BF49 /* libReact Native Open Settings.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,6 +667,7 @@
 				26E77BC01CDA435D94C22E6B /* RNFirebase.xcodeproj */,
 				E24F612747B7416B8D475F57 /* RNWifi.xcodeproj */,
 				9F931E1883204890A7AF4C24 /* IOTWifi.xcodeproj */,
+				410FA0E6360A406986339FEA /* React Native Open Settings.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -718,6 +732,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E318329D230C4A3E00971543 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E31832A1230C4A3F00971543 /* libReact Native Open Settings.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		E31AA4B822D4DFE7007FAEF9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -734,6 +756,7 @@
 				DA47018648AC4AB7B55E3A68 /* libRNFirebase.a */,
 				9433AC5D457D482EB13FB32C /* libRNWifi.a */,
 				3F6EED08990C4605987D8624 /* libIOTWifi.a */,
+				6D17EBA8F4A343CD86BC39FE /* libReact Native Open Settings.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -909,6 +932,10 @@
 				{
 					ProductGroup = 139FDEE71B06529A00C62182 /* Products */;
 					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
+				},
+				{
+					ProductGroup = E318329D230C4A3E00971543 /* Products */;
+					ProjectRef = 410FA0E6360A406986339FEA /* React Native Open Settings.xcodeproj */;
 				},
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
@@ -1181,6 +1208,13 @@
 			remoteRef = E30B443C22C12BE700B6970E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E31832A1230C4A3F00971543 /* libReact Native Open Settings.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libReact Native Open Settings.a";
+			remoteRef = E31832A0230C4A3F00971543 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		E31AA4E122D4DFE7007FAEF9 /* libReactNativePermissions.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1392,11 +1426,13 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-wifi/ios",
 					"$(SRCROOT)/../node_modules/react-native-iot-wifi/ios",
+					"$(SRCROOT)/../node_modules/react-native-open-settings",
 				);
 				INFOPLIST_FILE = CoffeeManagerApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/CoffeeManagerApp\"",
 					"\"$(SRCROOT)/CoffeeManagerApp\"",
 					"\"$(SRCROOT)/CoffeeManagerApp\"",
 				);
@@ -1424,11 +1460,13 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-wifi/ios",
 					"$(SRCROOT)/../node_modules/react-native-iot-wifi/ios",
+					"$(SRCROOT)/../node_modules/react-native-open-settings",
 				);
 				INFOPLIST_FILE = CoffeeManagerApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/CoffeeManagerApp\"",
 					"\"$(SRCROOT)/CoffeeManagerApp\"",
 					"\"$(SRCROOT)/CoffeeManagerApp\"",
 				);

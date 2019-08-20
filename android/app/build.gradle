@@ -186,6 +186,7 @@ preBuild.doLast {
 
 
 dependencies {
+    implementation project(':react-native-open-settings')
     implementation project(':react-native-android-wifi')
     implementation project(':react-native-iot-wifi')
     implementation project(':react-native-vector-icons')

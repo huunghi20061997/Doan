@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import  {   Text, View,ImageBackground,Alert,
-            SafeAreaView,ScrollView,TouchableOpacity
+            SafeAreaView,ScrollView,TouchableOpacity,AsyncStorage
 } from 'react-native'
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -98,6 +98,7 @@ class Register extends Component {
             this.props.registerReducer.isRegisterSuccess == true
         )
         {
+            AsyncStorage.multiSet([['Phone',this.state.numberPhone],['Password',this.state.newPassword]]);
             this.props.navigation.navigate('Login');
         }
   }
@@ -200,6 +201,24 @@ class Register extends Component {
                                           <Text_Custom  content = {'Đăng kí'}
                                                         style = {{
                                                                     color : constants.BACKGROUND_TURQUOISE,
+                                                                    fontSize:  15,
+                                                                }}
+                                          />
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity style = {{
+                                                                    marginTop : constants.MARGIN_DEFAULT_APP * 2,
+                                                                    justifyContent : 'center',
+                                                                    alignItems : 'center',
+                                                                    height : constants.HEIGHT_DEFAULT_TEXT_INPUT,
+                                                                    width : '50%',
+                                                                    alignSelf : 'center',
+                                                                }}
+                                                        onPress = {()=>{this.props.navigation.navigate('Login')}}
+                                    >
+                                          <Text_Custom  content = {'Trở về'}
+                                                        style = {{
+                                                                    color : 'gray',
                                                                     fontSize:  15,
                                                                 }}
                                           />

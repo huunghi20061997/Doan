@@ -89,7 +89,7 @@ const AppStackNav = createStackNavigator({
         screen : DrawerApp
     }
     },{
-        initialRouteName : 'DrawerApp',
+        initialRouteName : 'Splash',
 })
 
 
