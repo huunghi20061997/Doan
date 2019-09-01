@@ -3,8 +3,11 @@ import { View, Text,ImageBackground,TouchableOpacity,StyleSheet } from 'react-na
 import * as constants from '../../../configapp/constants';
 import Text_Custom from '../../component/text_custom';
 import {showBlockUI,hideBlockUI} from '../../component/block-ui';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionAuthen from '../Login/action';
 
-export default class MenuApp extends Component {
+class MenuApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -164,3 +167,17 @@ const styles = StyleSheet.create({
         marginBottom : 10,
     }
 })
+
+function mapStateToProps(state) {
+    return {
+        authenReducer        :  state.authenReducer
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actionAuthen        : bindActionCreators(actionAuthen,dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MenuApp);

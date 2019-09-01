@@ -8,7 +8,6 @@ import * as actionAuthen from './action';
 import * as constants from '../../../configapp/constants';
 import Text_Custom from '../../component/text_custom';
 import Text_Input from '../../component/text_input';
-import {showBlockUI,hideBlockUI} from '../../component/block-ui';
 
 class Login extends Component {
 
@@ -48,9 +47,9 @@ class Login extends Component {
     if(this.props.authenReducer.isAuthenSuccess !== prevProps.authenReducer.isAuthenSuccess){
       if(this.props.authenReducer.isAuthenSuccess){
         this.props.navigation.navigate('DrawerApp');
-        //this.props.actionAuthen.resetAuthen();
       }
     }
+
   }
 
   checkLogin(){

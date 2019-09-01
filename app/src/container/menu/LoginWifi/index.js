@@ -57,11 +57,15 @@ export default class LoginWifi extends Component {
 }
 
   readDataQR = (Data) => {
+
+    console.log('>>> this is data',Data)
     if(this.state.readingData) return ; 
     this.setState({readingData : true});
     let objectData = {};
     if(Data.hasOwnProperty('data')){
       objectData = JSON.parse(Data.data);
+      console.log('>>> this is data1',objectData)
+
     }
         if(objectData.hasOwnProperty('name') && objectData.hasOwnProperty('password')){
           if(Platform.OS == 'android'){
