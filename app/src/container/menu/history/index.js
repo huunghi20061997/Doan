@@ -114,7 +114,7 @@ class ItemPay extends Component {
                                                     alignItems : 'center'
                                                 }}
                             >
-                                    <IonIcon    name = {'pause'}
+                                    <IonIcon    name = {'home'}
                                                 color = {constants.BACKGROUND_TURQUOISE}
                                                 size = {15}
                                     />
@@ -161,6 +161,7 @@ class History extends Component {
   }
 
   componentDidMount(){
+    this.props.navigation.addListener  ('willFocus', () =>this.props.actionHistory.getListHistory());
     this.props.actionHistory.getListHistory();
 }
 

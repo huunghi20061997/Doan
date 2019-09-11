@@ -96,6 +96,21 @@ class Search extends Component {
     };
   }
 
+  resetState(){
+    this.setState({
+    listProvince : [],
+    listDistrict : [],
+    visibleModal : false,
+    selectItemProvince : -1,
+    selectItemDistrict : -1,
+    currentSelect : false,//false is province, true is district
+    errorGetListProvince : false,
+    errorGetListDistrict : false
+  })
+}
+
+
+
   getListProvince(){
     Firebase.FirebaseGetProvince()
     .then((reponse)=>{
@@ -144,19 +159,25 @@ class Search extends Component {
     this.props.actionSearch.getListShopDistrict(this.state.selectItemDistrict.id_district);
   }
 
+  componentWillUnmount(){
+    this.resetState();
+  }
+
   componentDidMount(){
     this.getListProvince();
   }
 
-  hideModal(){
+  hideModal(actionSelect = false){
       this.setState({
           visibleModal : false
       },()=>{
-          if(this.state.currentSelect){
-              this.setState({currentSelect : false});
-              this.getListShop();
-          }else{
-            this.setState({currentSelect : true});
+          if(!actionSelect){
+            if(this.state.currentSelect){
+                this.setState({currentSelect : false});
+                this.getListShop();
+            }else{
+              this.setState({currentSelect : true});
+            }
           }
       })
   }
@@ -176,12 +197,15 @@ class Search extends Component {
                                         flex : 1,
                                     }}
                     >
-                            <View   style = {{
-                                                flex : 0.3,
-                                            }}
+                            <TouchableOpacity   style = {{
+                                                            flex : 0.3,
+                                                        }}
+                                                onPress = {()=>{
+                                                    this.hideModal(true);
+                                                }}
                             >
 
-                            </View>
+                            </TouchableOpacity>
 
                             <View   style = {{
                                                 flex : 0.7,
@@ -249,7 +273,7 @@ class Search extends Component {
                                                     alignItems : 'center'
                                                 }}
                                         onPress = {()=> {
-                                                            this.setState({visibleModal : true})
+                                                            this.setState({visibleModal : true, currentSelect : false })
                                                         }}
                     >
                             <Text_Custom    content = {'Chọn thành phố'}
@@ -265,7 +289,8 @@ class Search extends Component {
                                                     alignItems : 'center'
                                                 }}
                                         onPress =   {()=> {
-                                                        this.setState({visibleModal : true})
+                                                        if(this.state.selectItemProvince !== -1 && this.state.currentSelect)
+                                                        this.setState({visibleModal : true, currentSelect : true})
                                                     }}
                     >
                             <Text_Custom    content = {'Chọn quận, huyện'}

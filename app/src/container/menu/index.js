@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
-import { View, Text,ImageBackground,TouchableOpacity,StyleSheet } from 'react-native';
+import { View, Text,ImageBackground,TouchableOpacity,StyleSheet,BackHandler } from 'react-native';
 import * as constants from '../../../configapp/constants';
 import Text_Custom from '../../component/text_custom';
 import {showBlockUI,hideBlockUI} from '../../component/block-ui';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionAuthen from '../Login/action';
 
-export default class MenuApp extends Component {
+class MenuApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+        console.log('>>>>> hello ',)
+      BackHandler.exitApp();
+      return true;
+    });
+  }
+
+  componentWillUnmount() {
+    this.backHandler.remove();
   }
 
   render() {    
@@ -164,3 +176,17 @@ const styles = StyleSheet.create({
         marginBottom : 10,
     }
 })
+
+function mapStateToProps(state) {
+    return {
+        authenReducer        :  state.authenReducer
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actionAuthen        : bindActionCreators(actionAuthen,dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MenuApp);

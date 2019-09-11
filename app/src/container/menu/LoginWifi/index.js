@@ -22,17 +22,34 @@ export default class LoginWifi extends Component {
     this.state = {
       focusedScreen : false,
       readingData : false,
+      showAndroid : false,
       nameWifi_IOS : '',
       passwordWifi_IOS : '',
     };
     this.loginWifi = this.loginWifi.bind(this);
   }
 
+  resetState(){
+    this.setState({
+      focusedScreen : false,
+      readingData : false,
+      showAndroid : false,
+      nameWifi_IOS : '',
+      passwordWifi_IOS : '',
+    })
+  }
+
   loginWifi(name,password){
+
+    console.log('>>>>. user name',name)
+    console.log('>>>>. user name1',password)
+
     if(Platform.OS == 'android'){
           this.numberLogin += 1 ; 
           wifi.findAndConnect(name,password, (found) => {
+            console.log('>>>>> this is found',found)
             if (found) {
+              console.log('>>>>> this is found',found)
               this.setState({readingData : false});
               hideBlockUI(constants.RESULT_BLOCK_SUCCESS,'Đăng nhập wifi thành công');
               this.props.navigation.goBack();
@@ -43,27 +60,35 @@ export default class LoginWifi extends Component {
                 },1000);
               }else{
                 this.setState({readingData : false});
-                hideBlockUI(constants.RESULT_BLOCK_ERROR,'Đăng nhập wifi thất bại');
-                this.props.navigation.goBack();
+                hideBlockUI(constants.RESULT_BLOCK_ERROR,'Vui lòng đăng nhập thủ công');
+                this.setState ({
+                                  showAndroid : true,
+                                  nameWifi_IOS : name,
+                                  passwordWifi_IOS : password,
+                              })
               }
             }
-        });
+        })
     }else{
       this.setState({
         nameWifi_IOS : name,
         passwordWifi_IOS : password,
       })
+      hideBlockUI(constants.RESULT_BLOCK_SUCCESS,'Đã lấy được thông tin');
     }
 }
 
   readDataQR = (Data) => {
+    console.log('>>> this is data',Data)
     if(this.state.readingData) return ; 
     this.setState({readingData : true});
+    showBlockUI();
     let objectData = {};
     if(Data.hasOwnProperty('data')){
       objectData = JSON.parse(Data.data);
     }
         if(objectData.hasOwnProperty('name') && objectData.hasOwnProperty('password')){
+          console.log('>>i am here0');
           if(Platform.OS == 'android'){
               wifi.isEnabled((isEnabled)=>{
                 if(!isEnabled) {
@@ -75,6 +100,7 @@ export default class LoginWifi extends Component {
                 }
             });
           }else{
+            console.log('>>i am here2');
                   this.loginWifi(objectData.name,objectData.password);
                 }
         }
@@ -86,11 +112,22 @@ export default class LoginWifi extends Component {
                                               this.setState({ focusedScreen: true })
                           );
     navigation.addListener('willBlur', () =>
-                                              this.setState({ focusedScreen: false })
+                                              this.resetState()
                           );
-                          Wifi.connect("wifi-name", (error) => {
-                            console.log(error ? 'error: ' + error : 'connected to wifi-name');
-                          });
+  }
+
+  componentWillUnmount(){
+    this.cleanData();
+  }
+
+  cleanData(){
+    this.setState({
+      focusedScreen : false,
+      readingData : false,
+      showAndroid : false,
+      nameWifi_IOS : '',
+      passwordWifi_IOS : '',
+    })
   }
 
   render() {
@@ -134,7 +171,7 @@ export default class LoginWifi extends Component {
                     </View>
 
                     {
-                    Platform.OS === 'ios' ? 
+                    Platform.OS === 'ios' || this.state.showAndroid ? 
                     <View style = {{
                                       flex : 0.3,
                                       //flexDirection : 'row',
@@ -169,6 +206,7 @@ export default class LoginWifi extends Component {
                                                   onPress = {()=>{
                                                     Clipboard.setString(this.state.passwordWifi_IOS);
                                                     OpenSettings.openSettings();
+                                                    
                                                   }}
                                                   disabled = {this.state.passwordWifi_IOS.length == 0 ? true : false}
                                 >
