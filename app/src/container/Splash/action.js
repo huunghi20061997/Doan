@@ -28,6 +28,7 @@ export const actionAuthen = (navigation) => {
         dispath(actionStartAuthen());
         AsyncStorage.multiGet(['Phone','Password'])
         .then((reponse)=>{
+            console.log('this is rreponse',reponse)
             if(reponse !== null){
                 const numberPhone   = reponse[0][1];
                 const passWord      = reponse[1][1];
