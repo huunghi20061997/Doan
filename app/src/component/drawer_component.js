@@ -4,10 +4,12 @@ import Text_Custom from '../../src/component/text_custom';
 import * as constants from '../../configapp/constants';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {showBlockUI,hideBlockUI} from '../component/block-ui';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionAuthen from '../container/Login/action';
 
 
-
-export default class DrawerComponent extends Component {
+class DrawerComponent extends Component {
   constructor(props) {
     super(props);
     this.logoutUser = this.logoutUser.bind(this);
@@ -21,12 +23,14 @@ export default class DrawerComponent extends Component {
         if(reponse !== null){
             AsyncStorage.clear().
             then((reponse)=>{
+                this.props.actionAuthen.resetAuthen();
                 this.props.navigation.navigate('Login');
             }).
             catch((error)=>{
             })
         }
     }).catch((error)=>{
+        this.props.actionAuthen.resetAuthen();
         this.props.navigation.navigate('Login');
     })
     
@@ -200,3 +204,18 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
     }
 });
+
+
+function mapStateToProps(state) {
+    return {
+        authenReducer        :  state.authenReducer
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actionAuthen        : bindActionCreators(actionAuthen,dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerComponent);

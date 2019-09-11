@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text,ImageBackground,TouchableOpacity,StyleSheet } from 'react-native';
+import { View, Text,ImageBackground,TouchableOpacity,StyleSheet,BackHandler } from 'react-native';
 import * as constants from '../../../configapp/constants';
 import Text_Custom from '../../component/text_custom';
 import {showBlockUI,hideBlockUI} from '../../component/block-ui';
@@ -14,7 +14,16 @@ class MenuApp extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+        console.log('>>>>> hello ',)
+      BackHandler.exitApp();
+      return true;
+    });
+  }
+
+  componentWillUnmount() {
+    this.backHandler.remove();
   }
 
   render() {    
